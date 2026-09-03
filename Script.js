@@ -30,7 +30,7 @@ const pages = [
     name: 'My Dearest 💔',
     heading: 'I\'m So Sorry',
     message: `I've been doing a lot of thinking, and I realize I made a mistake.\nI let my pride get in the way, and I hurt you.\nI know saying "sorry" might not fix everything, but I need you to know that my regret is real.\nPlease know that you mean more to me than my ego ever did.\nI miss you. I miss us.`,
-    song: 'Chicago - Hard To Say I'm Sorry (Official Music Video)-[AudioTrimmer.com].mp3',
+    song: 'Chicago.mp3',
     bg: 'linear-gradient(145deg, #1e2b36, #3a4f60)'
   },
   {
@@ -38,7 +38,7 @@ const pages = [
     name: 'To You 🌹',
     heading: 'I Was Wrong',
     message: `I've had time to reflect, and I see things differently now.\nI was selfish, and I didn't appreciate you the way I should have.\nYou deserved better from me. I'm not making excuses, just trying to be honest.\nI hope you can find it in your heart to forgive me.`,
-    song: 'reflective-guitar.mp3',
+    song: 'Chicago.mp3',
     bg: 'linear-gradient(145deg, #2d4050, #4a6478)'
   },
   {
@@ -46,7 +46,7 @@ const pages = [
     name: 'For You 💖',
     heading: 'I Miss Your Smile',
     message: `The silence feels so loud without you.\nI miss your laugh, your voice, the way you make everything seem brighter.\nThe thought of losing you is the worst pain I've known.\nI'm here, ready to listen, ready to change, ready to do better.\nI just need a chance.`,
-    song: 'gentle-strings.mp3',
+    song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #3a5568, #5a7a8e)'
   },
   {
@@ -54,7 +54,7 @@ const pages = [
     name: 'Always & Forever ❤️',
     heading: 'Can We Try Again?',
     message: `I know things won't be the same overnight, and I'm not asking for that.\nAll I'm asking for is a chance to earn back your trust.\nI want to show you that you are my priority.\nI want to be the person you deserve.\nI'm sorry for everything, and I promise to do better.\nWith all my love.`,
-    song: 'hopeful-piano.mp3',
+    song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #4a6a7e, #6e8fa3)'
   },
   // ----- FORGIVE PAGE (id: 4) -----
@@ -63,7 +63,7 @@ const pages = [
     name: 'One Last Question 💫',
     heading: 'Do You Forgive Me?',
     message: `I know I don't deserve it, but I'm asking with all my heart.\nCan you find it in you to forgive me?`,
-    song: 'hopeful-piano.mp3',
+    song: 'Julius.mp3',
     bg: 'linear-gradient(145deg, #2a4050, #4a6a7e)',
     isForgivePage: true
   },
@@ -73,7 +73,7 @@ const pages = [
     name: 'You Said Yes! 🎉',
     heading: 'Thank You',
     message: `You have no idea how much this means to me.\nI promise I'll spend every day making it up to you.\nI love you. ❤️`,
-    song: 'celebratory.mp3',
+    song: 'Julius.mp3',
     bg: 'linear-gradient(145deg, #2a5a4a, #4a8a7a)',
     isCelebratory: true
   },
