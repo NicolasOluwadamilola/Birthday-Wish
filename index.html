@@ -1,3212 +1,852 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
-
-    <title>For Baby ❤️</title>
-
-    <style>
-
-        /* =====================================================
-           FONTS
-        ===================================================== */
-
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap');
-
-
-        /* =====================================================
-           RESET
-        ===================================================== */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-
-        html,
-        body {
-            width: 100%;
-            min-height: 100%;
-
-            background: #080304;
-
-            color: #f5e9eb;
-
-            font-family: "Inter", sans-serif;
-
-            overflow-x: hidden;
-        }
-
-
-        body {
-            min-height: 100vh;
-        }
-
-
-        button,
-        a {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-
-        /* =====================================================
-           BACKGROUND
-        ===================================================== */
-
-        .background {
-            position: fixed;
-
-            inset: 0;
-
-            z-index: -20;
-
-            background:
-                radial-gradient(
-                    circle at 15% 15%,
-                    rgba(95, 17, 38, 0.55),
-                    transparent 35%
-                ),
-
-                radial-gradient(
-                    circle at 85% 75%,
-                    rgba(70, 10, 27, 0.5),
-                    transparent 40%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #18070c 0%,
-                    #090305 55%,
-                    #18060c 100%
-                );
-        }
-
-
-        .background::after {
-            content: "";
-
-            position: absolute;
-
-            inset: 0;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    transparent 20%,
-                    rgba(0, 0, 0, 0.4) 100%
-                );
-
-            pointer-events: none;
-        }
-
-
-        /* =====================================================
-           BACKGROUND PARTICLES
-        ===================================================== */
-
-        .particles {
-            position: fixed;
-
-            inset: 0;
-
-            z-index: -10;
-
-            overflow: hidden;
-
-            pointer-events: none;
-        }
-
-
-        .particle {
-            position: absolute;
-
-            width: 2px;
-            height: 2px;
-
-            border-radius: 50%;
-
-            background: rgba(255, 200, 210, 0.75);
-
-            box-shadow:
-                0 0 8px rgba(255, 100, 130, 0.5);
-
-            animation:
-                twinkle 4s infinite ease-in-out;
-        }
-
-
-        @keyframes twinkle {
-
-            0%,
-            100% {
-                opacity: 0.1;
-
-                transform: scale(0.7);
-            }
-
-            50% {
-                opacity: 0.9;
-
-                transform: scale(1.5);
-            }
-        }
-
-
-        /* =====================================================
-           SCREEN SYSTEM
-        ===================================================== */
-
-        .screen {
-            position: absolute;
-
-            top: 0;
-            left: 0;
-
-            width: 100%;
-
-            min-height: 100vh;
-
-            padding:
-                85px
-                22px
-                60px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            opacity: 0;
-
-            visibility: hidden;
-
-            pointer-events: none;
-
-            transform: translateY(25px);
-
-            transition:
-                opacity 0.7s ease,
-                transform 0.7s ease,
-                visibility 0.7s ease;
-        }
-
-
-        .screen.active {
-            opacity: 1;
-
-            visibility: visible;
-
-            pointer-events: auto;
-
-            transform: translateY(0);
-        }
-
-
-        /* =====================================================
-           TYPOGRAPHY
-        ===================================================== */
-
-        .eyebrow {
-            font-size: 13px;
-
-            letter-spacing: 7px;
-
-            text-transform: uppercase;
-
-            color: #b7a0a6;
-
-            text-align: center;
-
-            margin-bottom: 65px;
-        }
-
-
-        .eyebrow::before {
-            content: "●";
-
-            color: #b52445;
-
-            margin-right: 15px;
-
-            letter-spacing: 0;
-        }
-
-
-        .title {
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-size:
-                clamp(60px, 17vw, 105px);
-
-            font-weight: 500;
-
-            line-height: 0.9;
-
-            color: #fff7f8;
-
-            text-align: center;
-        }
-
-
-        .subtitle {
-            margin-top: 30px;
-
-            max-width: 500px;
-
-            font-size:
-                clamp(19px, 5vw, 29px);
-
-            line-height: 1.6;
-
-            font-weight: 300;
-
-            color: #dfd0d4;
-
-            text-align: center;
-        }
-
-
-        .small-text {
-            margin-top: 70px;
-
-            font-size: 12px;
-
-            letter-spacing: 6px;
-
-            text-transform: uppercase;
-
-            color: #79656b;
-
-            text-align: center;
-        }
-
-
-        /* =====================================================
-           MAIN BUTTON
-        ===================================================== */
-
-        .button-container {
-            position: relative;
-
-            margin-top: 75px;
-
-            padding:
-                25px
-                38px;
-
-            border:
-                1px solid
-                rgba(255, 140, 165, 0.18);
-
-            border-radius: 100px;
-        }
-
-
-        .button-container::before {
-            content: "";
-
-            position: absolute;
-
-            inset: 12px;
-
-            border:
-                1px solid
-                rgba(255, 140, 165, 0.25);
-
-            border-radius: 100px;
-        }
-
-
-        .main-button {
-            position: relative;
-
-            z-index: 2;
-
-            min-width: 210px;
-
-            padding:
-                20px
-                45px;
-
-            border: none;
-
-            border-radius: 100px;
-
-            outline: none;
-
-            background: #e93659;
-
-            color: white;
-
-            font-size: 19px;
-
-            font-weight: 500;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 0 25px
-                rgba(233, 54, 89, 0.25);
-
-            transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-
-        .main-button:hover {
-            transform: scale(1.04);
-
-            box-shadow:
-                0 0 40px
-                rgba(233, 54, 89, 0.5);
-        }
-
-
-        .main-button:active {
-            transform: scale(0.97);
-        }
-
-
-        /* =====================================================
-           TRACE HEADER
-        ===================================================== */
-
-        .trace-header {
-            text-align: center;
-        }
-
-
-        .trace-title {
-            font-size: 13px;
-
-            letter-spacing: 7px;
-
-            color: #b8a5a9;
-        }
-
-
-        .progress {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 9px;
-
-            margin-top: 27px;
-        }
-
-
-        .progress span {
-            width: 13px;
-
-            height: 13px;
-
-            border-radius: 50%;
-
-            background: #42222a;
-
-            transition: 0.3s ease;
-        }
-
-
-        .progress span.active {
-            width: 38px;
-
-            border-radius: 20px;
-
-            background: #ed3e60;
-        }
-
-
-        /* =====================================================
-           STAR TRACE AREA
-        ===================================================== */
-
-        .star-area {
-            position: relative;
-
-            width:
-                min(90vw, 500px);
-
-            height: 560px;
-
-            margin-top: 35px;
-
-            touch-action: none;
-        }
-
-
-        /* =====================================================
-           STARS
-        ===================================================== */
-
-        .star {
-            position: absolute;
-
-            width: 20px;
-
-            height: 20px;
-
-            transform:
-                translate(-50%, -50%);
-
-            border-radius: 50%;
-
-            background: #684851;
-
-            cursor: grab;
-
-            z-index: 5;
-
-            touch-action: none;
-
-            transition:
-                transform 0.25s ease,
-                background 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-
-        .star:active {
-            cursor: grabbing;
-        }
-
-
-        .star.glowing {
-            background: #ff5e7d;
-
-            box-shadow:
-                0 0 10px #ff5e7d,
-                0 0 25px rgba(255, 70, 110, 0.8),
-                0 0 45px rgba(255, 70, 110, 0.4);
-
-            transform:
-                translate(-50%, -50%)
-                scale(1.2);
-
-            animation:
-                glow 1.5s infinite ease-in-out;
-        }
-
-
-        .star.completed {
-            background: #ffb1bf;
-
-            box-shadow:
-                0 0 12px
-                rgba(255, 150, 170, 0.8);
-        }
-
-
-        @keyframes glow {
-
-            0%,
-            100% {
-                box-shadow:
-                    0 0 10px #ff5e7d,
-                    0 0 25px
-                    rgba(255, 70, 110, 0.5);
-            }
-
-            50% {
-                box-shadow:
-                    0 0 15px #ff5e7d,
-                    0 0 45px
-                    rgba(255, 70, 110, 0.9);
-            }
-        }
-
-
-        /* =====================================================
-           CONNECTION LINES
-        ===================================================== */
-
-        .connection {
-            position: absolute;
-
-            height: 3px;
-
-            transform-origin: left center;
-
-            background: #ff8da3;
-
-            box-shadow:
-                0 0 8px
-                rgba(255, 100, 130, 0.9),
-
-                0 0 18px
-                rgba(255, 80, 110, 0.6);
-
-            pointer-events: none;
-
-            z-index: 1;
-        }
-
-
-        .connection.temporary {
-            opacity: 0.75;
-
-            background: #ff9aad;
-
-            box-shadow:
-                0 0 10px
-                rgba(255, 100, 130, 0.9),
-
-                0 0 25px
-                rgba(255, 80, 110, 0.7);
-        }
-
-
-        /* =====================================================
-           TRACE INSTRUCTIONS
-        ===================================================== */
-
-        .trace-instruction {
-            margin-top: auto;
-
-            font-size: 20px;
-
-            font-weight: 300;
-
-            color: #ded0d4;
-
-            text-align: center;
-        }
-
-
-        .trace-hint {
-            margin-top: 20px;
-
-            font-size: 12px;
-
-            letter-spacing: 6px;
-
-            text-transform: uppercase;
-
-            color: #725d63;
-
-            text-align: center;
-        }
-
-
-        /* =====================================================
-           HEART PAGE
-        ===================================================== */
-
-        .heart-area {
-            position: relative;
-
-            width:
-                min(90vw, 500px);
-
-            height: 500px;
-
-            margin-top: 25px;
-        }
-
-
-        .heart-line {
-            position: absolute;
-
-            height: 3px;
-
-            background: #ff91a7;
-
-            transform-origin: left center;
-
-            box-shadow:
-                0 0 10px #ff718c,
-
-                0 0 25px
-                rgba(255, 70, 110, 0.7);
-
-            animation:
-                lineAppear 0.5s ease forwards;
-        }
-
-
-        @keyframes lineAppear {
-
-            from {
-                opacity: 0;
-
-                width: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-
-        .heart-point {
-            position: absolute;
-
-            width: 30px;
-
-            height: 30px;
-
-            transform:
-                translate(-50%, -50%);
-
-            border-radius: 50%;
-
-            background: #ffafbd;
-
-            box-shadow:
-                0 0 15px
-                rgba(255, 140, 165, 0.9),
-
-                0 0 30px
-                rgba(255, 90, 120, 0.6);
-
-            animation:
-                heartPointAppear 0.5s ease forwards;
-        }
-
-
-        @keyframes heartPointAppear {
-
-            from {
-                opacity: 0;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(0.3);
-            }
-
-            to {
-                opacity: 1;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(1);
-            }
-        }
-
-
-        .heart-message {
-            max-width: 650px;
-
-            margin-top: 30px;
-
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-style: italic;
-
-            font-size:
-                clamp(25px, 6vw, 38px);
-
-            line-height: 1.3;
-
-            color: #f5aabd;
-
-            text-align: center;
-        }
-
-
-        /* =====================================================
-           SEALED PAGE
-        ===================================================== */
-
-        .sealed-title {
-            font-size: 13px;
-
-            letter-spacing: 7px;
-
-            color: #b9a6aa;
-        }
-
-
-        .scratch-card {
-            position: relative;
-
-            width:
-                min(92vw, 700px);
-
-            height: 520px;
-
-            margin-top: 50px;
-
-            overflow: hidden;
-
-            border-radius: 28px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #8d3046,
-                    #632034,
-                    #7d3042
-                );
-
-            border:
-                1px solid
-                rgba(255, 150, 170, 0.25);
-
-            box-shadow:
-                0 15px 60px
-                rgba(0, 0, 0, 0.3);
-        }
-
-
-        .scratch-content {
-            position: absolute;
-
-            inset: 0;
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 35px;
-
-            text-align: center;
-
-            background:
-                radial-gradient(
-                    circle at 50% 30%,
-                    rgba(255,255,255,0.08),
-                    transparent 45%
-                );
-        }
-
-
-        .scratch-content h2 {
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-size: 40px;
-
-            font-weight: 500;
-        }
-
-
-        .scratch-content p {
-            margin-top: 20px;
-
-            font-size: 13px;
-
-            letter-spacing: 5px;
-
-            color:
-                rgba(255,255,255,0.6);
-        }
-
-
-        #scratchCanvas {
-            position: absolute;
-
-            inset: 0;
-
-            width: 100%;
-
-            height: 100%;
-
-            cursor: crosshair;
-
-            touch-action: none;
-        }
-
-
-        .scratch-note {
-            margin-top: 50px;
-
-            width:
-                min(90vw, 700px);
-
-            padding-top: 35px;
-
-            border-top:
-                1px solid
-                rgba(255, 170, 185, 0.18);
-
-            text-align: center;
-
-            color: #725e64;
-
-            font-size: 17px;
-        }
-
-
-        /* =====================================================
-           MESSAGE PAGE
-        ===================================================== */
-
-        .message-screen {
-            padding-top: 100px;
-
-            padding-bottom: 80px;
-        }
-
-
-        .message-container {
-            width:
-                min(90vw, 700px);
-
-            text-align: center;
-        }
-
-
-        .for-baby {
-            font-size: 13px;
-
-            letter-spacing: 7px;
-
-            color: #b9a6aa;
-        }
-
-
-        .message {
-            margin-top: 60px;
-
-            font-size:
-                clamp(20px, 5vw, 28px);
-
-            line-height: 2;
-
-            font-weight: 300;
-
-            color: #e3d6d9;
-        }
-
-
-        .message p + p {
-            margin-top: 35px;
-        }
-
-
-        .question {
-            margin-top: 65px;
-
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-style: italic;
-
-            font-size:
-                clamp(35px, 8vw, 52px);
-
-            color: #f3a5b8;
-        }
-
-
-        .choice-note {
-            margin-top: 65px;
-
-            font-size: 17px;
-
-            line-height: 1.8;
-
-            color: #c9b9bd;
-        }
-
-
-        .signature {
-            margin-top: 70px;
-
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-size: 30px;
-
-            color: #eee2e5;
-        }
-
-
-        .choices {
-            position: relative;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 30px;
-
-            margin-top: 50px;
-
-            min-height: 80px;
-        }
-
-
-        .choice {
-            min-width: 160px;
-
-            padding:
-                20px
-                35px;
-
-            border-radius: 100px;
-
-            font-size: 18px;
-
-            font-weight: 500;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
-        }
-
-
-        .yes {
-            border: none;
-
-            background: #e93659;
-
-            color: white;
-
-            box-shadow:
-                0 0 25px
-                rgba(233, 54, 89, 0.25);
-        }
-
-
-        .yes:hover {
-            transform: scale(1.04);
-
-            box-shadow:
-                0 0 40px
-                rgba(233, 54, 89, 0.45);
-        }
-
-
-        .no {
-            background: transparent;
-
-            border:
-                1px solid
-                rgba(255, 150, 170, 0.25);
-
-            color: #d4c4c8;
-        }
-
-
-        /* =====================================================
-           YES PAGE
-        ===================================================== */
-
-        .yes-screen {
-            overflow: hidden;
-        }
-
-
-        .yes-title {
-            margin-top: 100px;
-
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-size:
-                clamp(90px, 25vw, 180px);
-
-            line-height: 0.8;
-
-            color: #fff5f6;
-
-            text-shadow:
-                0 0 30px
-                rgba(255, 100, 130, 0.25);
-        }
-
-
-        .yes-message {
-            margin-top: 60px;
-
-            max-width: 650px;
-
-            font-size:
-                clamp(20px, 5vw, 28px);
-
-            line-height: 1.7;
-
-            text-align: center;
-        }
-
-
-        .yes-italic {
-            margin-top: 35px;
-
-            font-family:
-                "Cormorant Garamond",
-                serif;
-
-            font-style: italic;
-
-            font-size: 30px;
-
-            color: #f5a7b9;
-
-            text-align: center;
-        }
-
-
-        .whatsapp {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            margin-top: 70px;
-
-            width:
-                min(90vw, 550px);
-
-            padding:
-                22px
-                35px;
-
-            border-radius: 100px;
-
-            text-decoration: none;
-
-            background: #ff647f;
-
-            color: white;
-
-            font-size: 18px;
-
-            font-weight: 600;
-
-            box-shadow:
-                0 0 35px
-                rgba(255, 80, 110, 0.3);
-
-            transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-
-        .whatsapp:hover {
-            transform: scale(1.03);
-
-            box-shadow:
-                0 0 50px
-                rgba(255, 80, 110, 0.55);
-        }
-
-
-        .footer-label {
-            margin-top: 75px;
-
-            font-size: 12px;
-
-            letter-spacing: 6px;
-
-            color: #755e64;
-        }
-
-
-        /* =====================================================
-           FLOATING HEARTS
-        ===================================================== */
-
-        .floating-hearts {
-            position: fixed;
-
-            inset: 0;
-
-            pointer-events: none;
-
-            overflow: hidden;
-
-            z-index: -1;
-        }
-
-
-        .floating-heart {
-            position: absolute;
-
-            font-size: 35px;
-
-            opacity: 0.55;
-
-            animation:
-                floatHeart
-                linear
-                forwards;
-        }
-
-
-        @keyframes floatHeart {
-
-            from {
-                transform:
-                    translateY(110vh)
-                    rotate(0deg);
-
-                opacity: 0;
-            }
-
-            15% {
-                opacity: 0.6;
-            }
-
-            to {
-                transform:
-                    translateY(-20vh)
-                    rotate(20deg);
-
-                opacity: 0;
-            }
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 600px) {
-
-            .screen {
-                padding-top: 75px;
-            }
-
-
-            .eyebrow {
-                margin-bottom: 55px;
-            }
-
-
-            .star-area {
-                height: 500px;
-            }
-
-
-            .scratch-card {
-                height: 470px;
-            }
-
-
-            .choices {
-                gap: 15px;
-            }
-
-
-            .choice {
-                min-width: 140px;
-            }
-
-
-            .message {
-                line-height: 1.8;
-            }
-        }
-
-
-        @media (max-width: 380px) {
-
-            .choice {
-                min-width: 125px;
-
-                padding:
-                    18px
-                    25px;
-            }
-
-
-            .star-area {
-                height: 450px;
-            }
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0306">
+  <title>One Message</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg: #0b0306;
+      --bg2: #1b070d;
+      --pink: #ff5573;
+      --pink-light: #ff9aae;
+      --text: #f7e9ec;
+      --muted: #b99ba2;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100svh;
+      width: 100%;
+      position: relative;
+      display: none;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(120, 15, 42, .25), transparent 35%),
+        radial-gradient(circle at 80% 75%, rgba(105, 8, 30, .20), transparent 38%),
+        linear-gradient(145deg, #17050a 0%, #080205 55%, #18050b 100%);
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .35;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.8) 0 1px, transparent 1.5px);
+      background-size: 180px 180px;
+      background-position: 20px 30px;
+    }
+
+    .content {
+      width: min(92%, 760px);
+      margin: auto;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .kicker {
+      letter-spacing: .38em;
+      font-size: 12px;
+      font-weight: 500;
+      color: #b99ba2;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 14px;
+      border-radius: 50%;
+      background: #9e2943;
+      box-shadow: 0 0 15px rgba(255,60,100,.45);
+    }
+
+    h1 {
+      margin: 62px 0 22px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(60px, 14vw, 108px);
+      font-weight: 500;
+      line-height: .9;
+      letter-spacing: -.04em;
+    }
+
+    .subtitle {
+      max-width: 620px;
+      margin: 0 auto;
+      color: #dccbd0;
+      font-size: clamp(21px, 5vw, 30px);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    .primary-btn, .secondary-btn {
+      border: 0;
+      cursor: pointer;
+      font: 600 18px 'Inter', sans-serif;
+    }
+
+    .primary-btn {
+      margin-top: 55px;
+      min-width: 210px;
+      padding: 21px 42px;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, #f34767, #e72e51);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 15px 45px rgba(239,48,81,.25);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 55px rgba(239,48,81,.4);
+    }
+
+    .footer-label {
+      margin-top: 75px;
+      color: #70565d;
+      letter-spacing: .34em;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 26px 0 0;
+    }
+
+    .progress span {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #3c2028;
+    }
+
+    .progress span.active {
+      width: 38px;
+      border-radius: 20px;
+      background: var(--pink);
+      box-shadow: 0 0 15px rgba(255,75,108,.5);
+    }
+
+    .game-content {
+      width: min(94%, 680px);
+    }
+
+    .game-title {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 13px;
+    }
+
+    .game-area {
+      position: relative;
+      width: min(94vw, 600px);
+      height: min(105vw, 620px);
+      margin: 38px auto 0;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .dot {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      margin: -13px 0 0 -13px;
+      border-radius: 50%;
+      background: #75535b;
+      box-shadow: 0 0 0 0 rgba(255, 90, 120, 0);
+      transition: background .2s, transform .2s, box-shadow .2s;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .dot.glowing {
+      background: #ff6681;
+      box-shadow: 0 0 25px 8px rgba(255, 70, 110, .45);
+      transform: scale(1.2);
+    }
+
+    .dot.connected {
+      background: #ffb0be;
+      box-shadow: 0 0 20px 4px rgba(255, 100, 130, .35);
+    }
+
+    .game-instruction {
+      margin: 0 auto;
+      color: #dfcfd3;
+      font-size: 22px;
+      line-height: 1.4;
+    }
+
+    .game-hint {
+      margin-top: 14px;
+      color: #775c63;
+      letter-spacing: .35em;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .scratch-content {
+      width: min(92%, 730px);
+    }
+
+    .section-label {
+      letter-spacing: .42em;
+      font-size: 13px;
+      color: #b99ba2;
+      text-transform: uppercase;
+    }
+
+    .scratch-card {
+      position: relative;
+      width: 100%;
+      height: min(58vw, 390px);
+      min-height: 270px;
+      margin: 45px auto 50px;
+      border-radius: 25px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 170, 185, .25);
+      box-shadow: 0 20px 70px rgba(0,0,0,.4);
+    }
+
+    .secret-message {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      text-align: center;
+      background: radial-gradient(circle, #350d19, #16050a);
+    }
+
+    .secret-message div {
+      max-width: 560px;
+    }
+
+    .secret-message strong {
+      display: block;
+      margin-bottom: 18px;
+      color: #ff9caf;
+      font: italic 500 38px 'Cormorant Garamond', serif;
+    }
+
+    .secret-message p {
+      margin: 0;
+      color: #e5d1d6;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .scratch-label {
+      margin-top: -25px;
+      color: #6f555c;
+      font-size: 17px;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255, 150, 170, .16);
+      margin: 45px 0;
+    }
+
+    .message-content {
+      padding: 90px 0 80px;
+    }
+
+    .message {
+      max-width: 760px;
+      margin: 55px auto 0;
+      color: #e5d4d8;
+      font-size: clamp(19px, 4.4vw, 27px);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .message p {
+      margin: 0 0 38px;
+    }
+
+    .question {
+      margin: 58px auto;
+      color: #ff9daf;
+      font: italic 600 clamp(32px, 7vw, 54px)/1.15 'Cormorant Garamond', serif;
+    }
+
+    .signature {
+      margin-top: 60px;
+      font: 500 34px 'Cormorant Garamond', serif;
+    }
+
+    .choice-note {
+      margin: 50px auto 25px;
+      color: #70565d;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    .choices {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 25px;
+      padding-bottom: 30px;
+    }
+
+    .choice {
+      min-width: 170px;
+      padding: 19px 30px;
+      border-radius: 999px;
+      background: transparent;
+      color: #d7c1c6;
+      border: 1px solid rgba(255, 160, 180, .25);
+      transition: .2s;
+      font: 600 18px 'Inter', sans-serif;
+      cursor: pointer;
+    }
+
+    .choice.yes {
+      color: white;
+      background: #ef3d5f;
+      border-color: transparent;
+      box-shadow: 0 12px 40px rgba(239,61,95,.25);
+    }
+
+    .choice:hover {
+      transform: translateY(-2px);
+    }
+
+    .final-content {
+      width: min(92%, 700px);
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 30px;
+      opacity: .5;
+      filter: blur(.3px);
+      animation: float 8s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      15% { opacity: .55; }
+      85% { opacity: .45; }
+      to { transform: translateY(-15vh) rotate(20deg); opacity: 0; }
+    }
+
+    .final-title {
+      margin: 0 0 45px;
+      font-size: clamp(80px, 20vw, 150px);
+      background: linear-gradient(90deg, #fff, #ff9db0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .final-text {
+      color: #e8d6da;
+      font-size: clamp(21px, 5vw, 30px);
+      line-height: 1.55;
+    }
+
+    .final-subtitle {
+      margin: 45px 0 60px;
+      color: #ff9db0;
+      font: italic 500 32px 'Cormorant Garamond', serif;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: min(100%, 520px);
+      padding: 23px 30px;
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      font: 600 18px 'Inter', sans-serif;
+      background: linear-gradient(135deg, #ff6681, #f64c6d);
+      box-shadow: 0 15px 50px rgba(245,60,95,.3);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 60px rgba(245,60,95,.45);
+    }
+
+    .sealed {
+      margin-top: 55px;
+      color: #765b63;
+      letter-spacing: .4em;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      .content { padding: 55px 0; }
+      h1 { margin-top: 45px; }
+      .primary-btn { margin-top: 45px; }
+      .game-area { height: 470px; margin-top: 35px; }
+      .scratch-card { height: 300px; min-height: 0; }
+      .message-content { padding-top: 65px; }
+      .choices { gap: 12px; }
+      .choice { min-width: 135px; padding: 17px 20px; }
+    }
+
+    @media (max-height: 700px) {
+      .content { padding-top: 35px; padding-bottom: 35px; }
+      h1 { margin-top: 35px; }
+      .game-area { height: 400px; }
+    }
+  </style>
 </head>
-
-
 <body>
 
+<!-- PAGE 1 -->
+<section class="page active" id="page1">
+  <div class="content">
+    <div class="kicker">One Message</div>
+    <h1>Hi Baby,</h1>
+    <div class="subtitle">Vedth wants to tell you<br>something.</div>
+    <button class="primary-btn" onclick="showPage(2)">What?</button>
+    <div class="footer-label">Made for one person</div>
+  </div>
+</section>
 
-    <!-- =====================================================
-         BACKGROUND
-    ===================================================== -->
-
-    <div class="background"></div>
-
-    <div
-        class="particles"
-        id="particles">
+<!-- PAGE 2 -->
+<section class="page" id="page2">
+  <div class="content game-content">
+    <div class="kicker game-title">Trace It · 1 of 3</div>
+    <div class="progress">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
     </div>
+    <div class="game-area" id="game1"></div>
+    <div class="game-instruction">Connect the stars, in order.</div>
+    <div class="game-hint">Start at the one that's glowing</div>
+  </div>
+</section>
 
-    <div
-        class="floating-hearts"
-        id="floatingHearts">
+<!-- PAGE 3 -->
+<section class="page" id="page3">
+  <div class="content game-content">
+    <div class="kicker game-title">Trace It · 2 of 3</div>
+    <div class="progress">
+      <span></span>
+      <span class="active"></span>
+      <span></span>
     </div>
+    <div class="game-area" id="game2"></div>
+    <div class="game-instruction">Connect the stars, in order.</div>
+    <div class="game-hint">Start at the one that's glowing</div>
+  </div>
+</section>
 
+<!-- PAGE 4 -->
+<section class="page" id="page4">
+  <div class="content game-content">
+    <div class="kicker game-title">Trace It · 3 of 3</div>
+    <div class="progress">
+      <span></span>
+      <span></span>
+      <span class="active"></span>
+    </div>
+    <div class="game-area" id="heartGame"></div>
+    <div class="game-instruction" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:#ff9caf;">
+      And some are obvious, the moment you connect them.
+    </div>
+  </div>
+</section>
 
-
-    <!-- =====================================================
-         SCREEN 1 — OPENING
-    ===================================================== -->
-
-    <section
-        class="screen active"
-        id="screen1"
-    >
-
-        <div class="eyebrow">
-            ONE MESSAGE
+<!-- PAGE 5 -->
+<section class="page" id="page5">
+  <div class="content scratch-content">
+    <div class="section-label">Sealed</div>
+    <div class="scratch-card" id="scratchCard">
+      <div class="secret-message">
+        <div>
+          <strong>I'm sorry, Baby.</strong>
+          <p>I know I messed up, and I don't want to hide behind jokes or excuses. I just want you to know that I am genuinely sorry.</p>
         </div>
-
-
-        <h1 class="title">
-            Hi Baby,
-        </h1>
-
-
-        <p class="subtitle">
-            Vedth wants to tell you<br>
-            something.
-        </p>
-
-
-        <div class="button-container">
-
-            <button
-                class="main-button"
-                onclick="goToScreen(2)"
-            >
-                What?
-            </button>
-
-        </div>
-
-
-        <div class="small-text">
-            MADE FOR ONE PERSON
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SCREEN 2 — TRACE 1
-    ===================================================== -->
-
-    <section
-        class="screen"
-        id="screen2"
-    >
-
-        <div class="trace-header">
-
-            <div class="trace-title">
-                TRACE IT · 1 OF 3
-            </div>
-
-
-            <div class="progress">
-
-                <span class="active"></span>
-
-                <span></span>
-
-                <span></span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="star-area"
-            id="stars1"
-        ></div>
-
-
-        <div class="trace-instruction">
-            Connect the stars, in order.
-        </div>
-
-
-        <div class="trace-hint">
-            START AT THE ONE THAT'S GLOWING
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SCREEN 3 — TRACE 2
-    ===================================================== -->
-
-    <section
-        class="screen"
-        id="screen3"
-    >
-
-        <div class="trace-header">
-
-            <div class="trace-title">
-                TRACE IT · 2 OF 3
-            </div>
-
-
-            <div class="progress">
-
-                <span></span>
-
-                <span class="active"></span>
-
-                <span></span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="star-area"
-            id="stars2"
-        ></div>
-
-
-        <div class="trace-instruction">
-            Connect the stars, in order.
-        </div>
-
-
-        <div class="trace-hint">
-            START AT THE ONE THAT'S GLOWING
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SCREEN 4 — HEART
-    ===================================================== -->
-
-    <section
-        class="screen"
-        id="screen4"
-    >
-
-        <div class="trace-header">
-
-            <div class="trace-title">
-                TRACE IT · 3 OF 3
-            </div>
-
-
-            <div class="progress">
-
-                <span></span>
-
-                <span></span>
-
-                <span class="active"></span>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="heart-area"
-            id="heartArea"
-        ></div>
-
-
-        <div class="heart-message">
-            And some are obvious, the moment you connect them.
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SCREEN 5 — SEALED MESSAGE
-    ===================================================== -->
-
-    <section
-        class="screen"
-        id="screen5"
-    >
-
-        <div class="sealed-title">
-            SEALED
-        </div>
-
-
-        <div class="scratch-card">
-
-            <div class="scratch-content">
-
-                <h2>
-                    Scratch to unseal
-                </h2>
-
-
-                <p>
-                    USE YOUR FINGER
-                </p>
-
-            </div>
-
-
-            <canvas
-                id="scratchCanvas"
-            ></canvas>
-
-        </div>
-
-
-        <div class="scratch-note">
-            It was hidden on purpose.
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SCREEN 6 — APOLOGY
-    ===================================================== -->
-
-    <section
-        class="screen message-screen"
-        id="screen6"
-    >
-
-        <div class="message-container">
-
-            <div class="for-baby">
-                FOR BABY
-            </div>
-
-
-            <div class="message">
-
-                <p>
-                    Baby, I know I messed up.
-                    And I know saying "I'm sorry"
-                    doesn't automatically make everything okay.
-                </p>
-
-
-                <p>
-                    But I need you to know that I genuinely
-                    regret hurting you. You mean far too much
-                    to me for me to pretend that what happened
-                    doesn't matter.
-                </p>
-
-
-                <p>
-                    I don't expect a few words to erase how
-                    you felt. I just want the chance to do
-                    better, to listen better, and to love you
-                    the way you deserve.
-                </p>
-
-            </div>
-
-
-            <div class="question">
-                Baby, will you forgive me?
-            </div>
-
-
-            <div class="choice-note">
-                Take your time with it.
-                I just wanted you to know how I feel.
-            </div>
-
-
-            <div class="signature">
-                — Vedth
-            </div>
-
-
-            <div class="choices">
-
-                <button
-                    class="choice yes"
-                    onclick="sayYes()"
-                >
-                    Yes ❤️
-                </button>
-
-
-                <button
-                    class="choice no"
-                    id="noButton"
-                    onclick="moveNoButton()"
-                >
-                    No
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         SCREEN 7 — YES
-    ===================================================== -->
-
-    <section
-        class="screen yes-screen"
-        id="screen7"
-    >
-
-        <div class="yes-title">
-            Yes.
-        </div>
-
-
-        <div class="yes-message">
-            Baby. You have no idea what you just did
-            to my week.
-        </div>
-
-
-        <div class="yes-italic">
-            Now come and say it to my face.
-        </div>
-
-
-        <!-- =================================================
-             WHATSAPP BUTTON
-
-             CHANGE 2348012345678
-             TO YOUR WHATSAPP NUMBER
-
-             Example:
-
-             08012345678
-
-             becomes:
-
-             2348012345678
-        ================================================== -->
-
-        <a
-            class="whatsapp"
-            href="https://wa.me/2348012345678?text=Yes%20Baby%20%E2%9D%A4%EF%B8%8F"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Tell me yourself&nbsp; →
-        </a>
-
-
-        <div class="footer-label">
-            SEALED · BABE & VEDTH
-        </div>
-
-    </section>
-
-
-
-    <script>
-
-
-        /* =====================================================
-           SCREEN NAVIGATION
-        ===================================================== */
-
-        let currentScreen = 1;
-
-
-        function goToScreen(number) {
-
-            const current =
-                document.getElementById(
-                    `screen${currentScreen}`
-                );
-
-
-            const next =
-                document.getElementById(
-                    `screen${number}`
-                );
-
-
-            if (!next) {
-                return;
-            }
-
-
-            current.classList.remove("active");
-
-
-            setTimeout(() => {
-
-                next.classList.add("active");
-
-            }, 100);
-
-
-            currentScreen = number;
-
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+      </div>
+      <canvas id="scratchCanvas"></canvas>
+    </div>
+    <div class="scratch-label">It was hidden on purpose.</div>
+    <div class="divider"></div>
+    <button class="primary-btn" onclick="showPage(6)">Continue</button>
+  </div>
+</section>
+
+<!-- PAGE 6 -->
+<section class="page" id="page6">
+  <div class="content message-content">
+    <div class="section-label">For Baby</div>
+    <div class="message">
+      <p>Baby, I know an apology is easy to type and much harder to prove. So I don't want this page to be just pretty words.</p>
+      <p>I am sorry for the way I made you feel. You deserved better from me in that moment, and I take responsibility for that.</p>
+      <p>I care about you far too much to pretend that what happened doesn't matter. It does. <strong>You</strong> do.</p>
+      <p>So — no need for too much talk, and no hiding it inside a joke this time:</p>
+      <div class="question">Baby, will you forgive me?</div>
+      <p>Take your time with it. I won't pressure you. I just wanted you to know how genuinely sorry I am, and how much you mean to me.</p>
+    </div>
+    <div class="signature">— Vedth</div>
+    <div class="choice-note">This page opens once. Whatever you choose, it stays chosen.</div>
+    <div class="choices">
+      <button class="choice yes" onclick="yesAnswer()">Yes</button>
+      <button class="choice" onclick="noAnswer()">No</button>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 7 -->
+<section class="page" id="page7">
+  <div class="hearts" id="hearts"></div>
+  <div class="content final-content">
+    <div class="kicker">Sealed</div>
+    <h1 class="final-title">Yes.</h1>
+    <div class="final-text">Baby. You have no idea what you just did to my week.</div>
+    <div class="final-subtitle">Now come and say it to my face.</div>
+    <a class="whatsapp-btn" href="https://wa.me/2348012345678?text=I%20said%20yes.%20Now%20come%20and%20say%20it%20to%20my%20face.%20%F0%9F%98%8C%20%E2%9D%A4%EF%B8%8F" target="_blank" rel="noopener noreferrer">Tell them yourself →</a>
+    <div class="sealed">Sealed · Babe & Vedth</div>
+  </div>
+</section>
+
+<script>
+  /* =========================================================
+     PAGE NAVIGATION
+     ========================================================= */
+  let currentPage = 1;
+
+  function showPage(number) {
+    document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+    const target = document.getElementById("page" + number);
+    if (target) {
+      target.classList.add("active");
+      currentPage = number;
+      window.scrollTo(0, 0);
+    }
+  }
+
+  /* =========================================================
+     FLUID DOT-CONNECTION GAME (drag continuous)
+     ========================================================= */
+  const games = [
+    { id: "game1", points: [[16,38],[61,35],[85,60],[39,69],[68,84]] },
+    { id: "game2", points: [[49,23],[74,27],[25,39],[16,66],[41,83],[68,86]] },
+    { id: "heartGame", points: [[17,34],[31,15],[52,33],[68,16],[84,34],[82,56],[65,76],[50,91],[34,76],[18,56],[17,34]] }
+  ];
+
+  function createDotGame(config, nextPage) {
+    const area = document.getElementById(config.id);
+    const canvas = document.createElement("canvas");
+    canvas.id = config.id + "-canvas";
+    canvas.style.position = "absolute";
+    canvas.style.inset = "0";
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.pointerEvents = "none";
+    area.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    const dots = [];
+
+    config.points.forEach((point, index) => {
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      dot.style.left = point[0] + "%";
+      dot.style.top = point[1] + "%";
+      if (index === 0) dot.classList.add("glowing");
+      dot.dataset.index = index;
+      area.appendChild(dot);
+      dots.push(dot);
+    });
+
+    let current = 0;
+    let dragging = false;
+    let lastPoint = null;
+    let drawnSegments = [];
+    let completed = false;
+
+    function resizeCanvas() {
+      const rect = area.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      redraw();
+    }
+
+    function getPoint(index) {
+      const rect = area.getBoundingClientRect();
+      return {
+        x: rect.width * config.points[index][0] / 100,
+        y: rect.height * config.points[index][1] / 100
+      };
+    }
+
+    function redraw() {
+      const rect = area.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 6;
+      ctx.strokeStyle = "#ff8299";
+      ctx.shadowColor = "rgba(255,80,115,.55)";
+      ctx.shadowBlur = 14;
+
+      drawnSegments.forEach(segment => {
+        const a = getPoint(segment[0]);
+        const b = getPoint(segment[1]);
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      });
+
+      ctx.shadowBlur = 0;
+      if (dragging && lastPoint && current < config.points.length - 1) {
+        const start = getPoint(current);
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(lastPoint.x, lastPoint.y);
+        ctx.strokeStyle = "rgba(255,130,153,.65)";
+        ctx.lineWidth = 5;
+        ctx.stroke();
+      }
+    }
+
+    function pointerPosition(event) {
+      const rect = area.getBoundingClientRect();
+      return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+    }
+
+    function dotAtPosition(x, y, index) {
+      const p = getPoint(index);
+      return Math.hypot(x - p.x, y - p.y) < 36; // forgiving hit area
+    }
+
+    // Start drag only if near the current dot
+    area.addEventListener("pointerdown", event => {
+      if (completed || current >= config.points.length - 1) return;
+      const p = pointerPosition(event);
+      if (!dotAtPosition(p.x, p.y, current)) return;
+      dragging = true;
+      lastPoint = p;
+      area.setPointerCapture(event.pointerId);
+      redraw();
+    });
+
+    area.addEventListener("pointermove", event => {
+      if (!dragging || completed) return;
+      lastPoint = pointerPosition(event);
+      const nextIndex = current + 1;
+
+      // check if we hit the next dot
+      if (dotAtPosition(lastPoint.x, lastPoint.y, nextIndex)) {
+        // connect current -> next
+        drawnSegments.push([current, nextIndex]);
+        dots[current].classList.remove("glowing");
+        dots[current].classList.add("connected");
+        current = nextIndex;
+
+        if (current < dots.length - 1) {
+          dots[current].classList.add("glowing");
+        } else {
+          dots[current].classList.remove("glowing");
+          dots[current].classList.add("connected");
+          completed = true;
+          dragging = false;
+          lastPoint = null;
+          redraw();
+          setTimeout(() => { showPage(nextPage); }, 700);
+          return;
         }
-
-
-
-        /* =====================================================
-           CREATE BACKGROUND PARTICLES
-        ===================================================== */
-
-        const particleContainer =
-            document.getElementById(
-                "particles"
-            );
-
-
-        for (
-            let i = 0;
-            i < 70;
-            i++
-        ) {
-
-            const particle =
-                document.createElement("div");
-
-
-            particle.className =
-                "particle";
-
-
-            particle.style.left =
-                Math.random() * 100 + "%";
-
-
-            particle.style.top =
-                Math.random() * 100 + "%";
-
-
-            particle.style.animationDelay =
-                Math.random() * 5 + "s";
-
-
-            particle.style.animationDuration =
-                (3 + Math.random() * 5) + "s";
-
-
-            particleContainer.appendChild(
-                particle
-            );
-        }
-
-
-
-        /* =====================================================
-           STAR POSITIONS
-        ===================================================== */
-
-        const traceGames = {
-
-            1: [
-
-                [12, 25],
-
-                [52, 23],
-
-                [82, 30],
-
-                [66, 62],
-
-                [34, 57]
-
-            ],
-
-
-            2: [
-
-                [58, 18],
-
-                [82, 23],
-
-                [35, 33],
-
-                [22, 50],
-
-                [37, 73],
-
-                [62, 78]
-
-            ]
-
-        };
-
-
-
-        /* =====================================================
-           CREATE DRAG TRACE GAME
-        ===================================================== */
-
-        function createTraceGame(
-            containerId,
-            gameNumber
-        ) {
-
-            const container =
-                document.getElementById(
-                    containerId
-                );
-
-
-            const positions =
-                traceGames[gameNumber];
-
-
-            let currentIndex = 0;
-
-            let dragging = false;
-
-            let activeStar = null;
-
-            let temporaryLine = null;
-
-
-            /* -------------------------------------------------
-               CREATE STARS
-            ------------------------------------------------- */
-
-            positions.forEach(
-                (position, index) => {
-
-                    const star =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    star.className =
-                        "star";
-
-
-                    star.style.left =
-                        position[0] + "%";
-
-
-                    star.style.top =
-                        position[1] + "%";
-
-
-                    star.dataset.index =
-                        index;
-
-
-                    if (index === 0) {
-
-                        star.classList.add(
-                            "glowing"
-                        );
-
-                    }
-
-
-                    container.appendChild(
-                        star
-                    );
-
-                }
-            );
-
-
-
-            /* -------------------------------------------------
-               START DRAGGING
-            ------------------------------------------------- */
-
-            container.addEventListener(
-                "pointerdown",
-                function(e) {
-
-                    const star =
-                        e.target.closest(
-                            ".star"
-                        );
-
-
-                    if (!star) {
-                        return;
-                    }
-
-
-                    const index =
-                        Number(
-                            star.dataset.index
-                        );
-
-
-                    /*
-                     * Only the current glowing
-                     * star can be dragged.
-                     */
-
-                    if (
-                        index !==
-                        currentIndex
-                    ) {
-
-                        shakeStar(star);
-
-                        return;
-                    }
-
-
-                    dragging = true;
-
-                    activeStar = star;
-
-
-                    e.preventDefault();
-
-
-                    /*
-                     * Keep receiving pointer
-                     * events while dragging.
-                     */
-
-                    try {
-
-                        container.setPointerCapture(
-                            e.pointerId
-                        );
-
-                    } catch (error) {
-                        // Ignore unsupported pointer capture.
-                    }
-
-
-                    /*
-                     * Create temporary line.
-                     */
-
-                    temporaryLine =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    temporaryLine.className =
-                        "connection temporary";
-
-
-                    container.appendChild(
-                        temporaryLine
-                    );
-
-
-                    updateTemporaryLine(
-                        e.clientX,
-                        e.clientY
-                    );
-
-                },
-                {
-                    passive: false
-                }
-            );
-
-
-
-            /* -------------------------------------------------
-               MOVE FINGER
-            ------------------------------------------------- */
-
-            container.addEventListener(
-                "pointermove",
-                function(e) {
-
-                    if (!dragging) {
-                        return;
-                    }
-
-
-                    e.preventDefault();
-
-
-                    updateTemporaryLine(
-                        e.clientX,
-                        e.clientY
-                    );
-
-                },
-                {
-                    passive: false
-                }
-            );
-
-
-
-            /* -------------------------------------------------
-               RELEASE FINGER
-            ------------------------------------------------- */
-
-            container.addEventListener(
-                "pointerup",
-                function(e) {
-
-                    if (!dragging) {
-                        return;
-                    }
-
-
-                    dragging = false;
-
-
-                    const nextStar =
-                        container.querySelector(
-                            `[data-index="${currentIndex + 1}"]`
-                        );
-
-
-                    if (nextStar) {
-
-                        const rect =
-                            nextStar.getBoundingClientRect();
-
-
-                        const starX =
-                            rect.left +
-                            rect.width / 2;
-
-
-                        const starY =
-                            rect.top +
-                            rect.height / 2;
-
-
-                        const distance =
-                            Math.sqrt(
-
-                                Math.pow(
-                                    e.clientX -
-                                    starX,
-                                    2
-                                )
-
-                                +
-
-                                Math.pow(
-                                    e.clientY -
-                                    starY,
-                                    2
-                                )
-
-                            );
-
-
-                        /*
-                         * Touch tolerance.
-                         */
-
-                        if (
-                            distance <= 60
-                        ) {
-
-                            /*
-                             * Remove temporary line.
-                             */
-
-                            if (
-                                temporaryLine
-                            ) {
-
-                                temporaryLine.remove();
-
-                            }
-
-
-                            /*
-                             * Create permanent line.
-                             */
-
-                            drawConnection(
-                                container,
-                                activeStar,
-                                nextStar
-                            );
-
-
-                            /*
-                             * Complete current star.
-                             */
-
-                            activeStar.classList.remove(
-                                "glowing"
-                            );
-
-
-                            activeStar.classList.add(
-                                "completed"
-                            );
-
-
-                            /*
-                             * Move to next star.
-                             */
-
-                            currentIndex++;
-
-
-                            /*
-                             * Make next star glow.
-                             */
-
-                            nextStar.classList.add(
-                                "glowing"
-                            );
-
-
-                            /*
-                             * Check whether
-                             * game is complete.
-                             */
-
-                            if (
-                                currentIndex >=
-                                positions.length - 1
-                            ) {
-
-                                nextStar.classList.remove(
-                                    "glowing"
-                                );
-
-
-                                nextStar.classList.add(
-                                    "completed"
-                                );
-
-
-                                setTimeout(
-                                    () => {
-
-                                        if (
-                                            gameNumber === 1
-                                        ) {
-
-                                            goToScreen(3);
-
-                                        }
-
-
-                                        if (
-                                            gameNumber === 2
-                                        ) {
-
-                                            goToScreen(4);
-
-                                        }
-
-                                    },
-                                    900
-                                );
-                            }
-
-                        } else {
-
-                            /*
-                             * Incorrect destination.
-                             */
-
-                            if (
-                                temporaryLine
-                            ) {
-
-                                temporaryLine.remove();
-
-                            }
-
-
-                            shakeStar(
-                                activeStar
-                            );
-                        }
-
-                    } else {
-
-                        if (
-                            temporaryLine
-                        ) {
-
-                            temporaryLine.remove();
-
-                        }
-
-                    }
-
-
-                    activeStar = null;
-
-                    temporaryLine = null;
-
-                }
-            );
-
-
-
-            /* -------------------------------------------------
-               CANCEL DRAG
-            ------------------------------------------------- */
-
-            container.addEventListener(
-                "pointercancel",
-                function() {
-
-                    dragging = false;
-
-
-                    if (
-                        temporaryLine
-                    ) {
-
-                        temporaryLine.remove();
-
-                    }
-
-
-                    activeStar = null;
-
-                    temporaryLine = null;
-
-                }
-            );
-
-
-
-            /* -------------------------------------------------
-               UPDATE TEMPORARY LINE
-            ------------------------------------------------- */
-
-            function updateTemporaryLine(
-                clientX,
-                clientY
-            ) {
-
-                if (
-                    !activeStar ||
-                    !temporaryLine
-                ) {
-
-                    return;
-
-                }
-
-
-                const containerRect =
-                    container.getBoundingClientRect();
-
-
-                const startRect =
-                    activeStar.getBoundingClientRect();
-
-
-                const x1 =
-                    startRect.left +
-                    startRect.width / 2 -
-                    containerRect.left;
-
-
-                const y1 =
-                    startRect.top +
-                    startRect.height / 2 -
-                    containerRect.top;
-
-
-                const x2 =
-                    clientX -
-                    containerRect.left;
-
-
-                const y2 =
-                    clientY -
-                    containerRect.top;
-
-
-                const dx =
-                    x2 - x1;
-
-
-                const dy =
-                    y2 - y1;
-
-
-                const distance =
-                    Math.sqrt(
-                        dx * dx +
-                        dy * dy
-                    );
-
-
-                const angle =
-                    Math.atan2(
-                        dy,
-                        dx
-                    ) *
-                    180 /
-                    Math.PI;
-
-
-                temporaryLine.style.left =
-                    x1 + "px";
-
-
-                temporaryLine.style.top =
-                    y1 + "px";
-
-
-                temporaryLine.style.width =
-                    distance + "px";
-
-
-                temporaryLine.style.transform =
-                    `rotate(${angle}deg)`;
-
-            }
-
-        }
-
-
-
-        /* =====================================================
-           DRAW PERMANENT CONNECTION
-        ===================================================== */
-
-        function drawConnection(
-            container,
-            star1,
-            star2
-        ) {
-
-            const containerRect =
-                container.getBoundingClientRect();
-
-
-            const rect1 =
-                star1.getBoundingClientRect();
-
-
-            const rect2 =
-                star2.getBoundingClientRect();
-
-
-            const x1 =
-                rect1.left +
-                rect1.width / 2 -
-                containerRect.left;
-
-
-            const y1 =
-                rect1.top +
-                rect1.height / 2 -
-                containerRect.top;
-
-
-            const x2 =
-                rect2.left +
-                rect2.width / 2 -
-                containerRect.left;
-
-
-            const y2 =
-                rect2.top +
-                rect2.height / 2 -
-                containerRect.top;
-
-
-            const dx =
-                x2 - x1;
-
-
-            const dy =
-                y2 - y1;
-
-
-            const distance =
-                Math.sqrt(
-                    dx * dx +
-                    dy * dy
-                );
-
-
-            const angle =
-                Math.atan2(
-                    dy,
-                    dx
-                ) *
-                180 /
-                Math.PI;
-
-
-            const line =
-                document.createElement(
-                    "div"
-                );
-
-
-            line.className =
-                "connection";
-
-
-            line.style.left =
-                x1 + "px";
-
-
-            line.style.top =
-                y1 + "px";
-
-
-            line.style.width =
-                distance + "px";
-
-
-            line.style.transform =
-                `rotate(${angle}deg)`;
-
-
-            container.insertBefore(
-                line,
-                container.firstChild
-            );
-        }
-
-
-
-        /* =====================================================
-           SHAKE STAR WHEN WRONG
-        ===================================================== */
-
-        function shakeStar(star) {
-
-            if (!star) {
-                return;
-            }
-
-
-            star.animate(
-
-                [
-
-                    {
-                        transform:
-                            "translate(-50%, -50%) translateX(-7px)"
-                    },
-
-                    {
-                        transform:
-                            "translate(-50%, -50%) translateX(7px)"
-                    },
-
-                    {
-                        transform:
-                            "translate(-50%, -50%) translateX(-5px)"
-                    },
-
-                    {
-                        transform:
-                            "translate(-50%, -50%)"
-                    }
-
-                ],
-
-                {
-                    duration: 250,
-
-                    easing: "ease-out"
-                }
-            );
-        }
-
-
-
-        /* =====================================================
-           INITIALIZE TRACE GAMES
-        ===================================================== */
-
-        createTraceGame(
-            "stars1",
-            1
-        );
-
-
-        createTraceGame(
-            "stars2",
-            2
-        );
-
-
-
-        /* =====================================================
-           CREATE HEART
-        ===================================================== */
-
-        function createHeart() {
-
-            const area =
-                document.getElementById(
-                    "heartArea"
-                );
-
-
-            /*
-             * Heart coordinates.
-             */
-
-            const points = [
-
-                [50, 85],
-
-                [27, 63],
-
-                [12, 40],
-
-                [13, 23],
-
-                [29, 13],
-
-                [43, 20],
-
-                [50, 32],
-
-                [57, 20],
-
-                [71, 13],
-
-                [87, 23],
-
-                [88, 40],
-
-                [73, 63],
-
-                [50, 85]
-
-            ];
-
-
-            /* -------------------------------------------------
-               DRAW HEART LINES
-            ------------------------------------------------- */
-
-            for (
-                let i = 0;
-                i < points.length - 1;
-                i++
-            ) {
-
-                const [
-                    x1,
-                    y1
-                ] = points[i];
-
-
-                const [
-                    x2,
-                    y2
-                ] = points[i + 1];
-
-
-                const dx =
-                    x2 - x1;
-
-
-                const dy =
-                    y2 - y1;
-
-
-                const distance =
-                    Math.sqrt(
-                        dx * dx +
-                        dy * dy
-                    );
-
-
-                const angle =
-                    Math.atan2(
-                        dy,
-                        dx
-                    ) *
-                    180 /
-                    Math.PI;
-
-
-                const line =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                line.className =
-                    "heart-line";
-
-
-                line.style.left =
-                    x1 + "%";
-
-
-                line.style.top =
-                    y1 + "%";
-
-
-                line.style.width =
-                    distance + "%";
-
-
-                line.style.transform =
-                    `rotate(${angle}deg)`;
-
-
-                line.style.animationDelay =
-                    (i * 0.12) + "s";
-
-
-                area.appendChild(
-                    line
-                );
-            }
-
-
-
-            /* -------------------------------------------------
-               HEART POINTS
-            ------------------------------------------------- */
-
-            points
-                .slice(0, -1)
-                .forEach(
-                    ([x, y], index) => {
-
-                        const point =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        point.className =
-                            "heart-point";
-
-
-                        point.style.left =
-                            x + "%";
-
-
-                        point.style.top =
-                            y + "%";
-
-
-                        point.style.animationDelay =
-                            (index * 0.12) + "s";
-
-
-                        area.appendChild(
-                            point
-                        );
-
-                    }
-                );
-
-
-            /*
-             * Move to sealed message.
-             */
-
-            setTimeout(
-                () => {
-                    goToScreen(5);
-                },
-                3000
-            );
-        }
-
-
-
-        /* =====================================================
-           INITIALIZE HEART ONLY ONCE
-        ===================================================== */
-
-        let heartCreated = false;
-
-
-        const originalGoToScreen =
-            goToScreen;
-
-
-        goToScreen = function(number) {
-
-            originalGoToScreen(number);
-
-
-            if (
-                number === 4 &&
-                !heartCreated
-            ) {
-
-                heartCreated = true;
-
-
-                setTimeout(
-                    () => {
-                        createHeart();
-                    },
-                    500
-                );
-            }
-        };
-
-
-
-        /* =====================================================
-           SCRATCH CARD
-        ===================================================== */
-
-        const canvas =
-            document.getElementById(
-                "scratchCanvas"
-            );
-
-
-        const ctx =
-            canvas.getContext("2d");
-
-
-        function setupScratchCanvas() {
-
-            const rect =
-                canvas.getBoundingClientRect();
-
-
-            const ratio =
-                window.devicePixelRatio ||
-                1;
-
-
-            canvas.width =
-                rect.width * ratio;
-
-
-            canvas.height =
-                rect.height * ratio;
-
-
-            ctx.setTransform(
-                ratio,
-                0,
-                0,
-                ratio,
-                0,
-                0
-            );
-
-
-            /*
-             * Scratch-cover color.
-             */
-
-            ctx.fillStyle =
-                "#9c4055";
-
-
-            ctx.fillRect(
-                0,
-                0,
-                rect.width,
-                rect.height
-            );
-
-
-            /*
-             * Texture.
-             */
-
-            ctx.globalAlpha =
-                0.12;
-
-
-            for (
-                let i = 0;
-                i < 500;
-                i++
-            ) {
-
-                ctx.fillStyle =
-                    Math.random() > 0.5
-                        ? "#ffffff"
-                        : "#300914";
-
-
-                ctx.fillRect(
-
-                    Math.random() *
-                    rect.width,
-
-                    Math.random() *
-                    rect.height,
-
-                    1,
-
-                    1
-                );
-            }
-
-
-            ctx.globalAlpha = 1;
-        }
-
-
-        setupScratchCanvas();
-
-
-
-        /* =====================================================
-           SCRATCH LOGIC
-        ===================================================== */
-
-        let scratching = false;
-
-
-        function scratch(e) {
-
-            if (!scratching) {
-                return;
-            }
-
-
-            const rect =
-                canvas.getBoundingClientRect();
-
-
-            let x;
-
-            let y;
-
-
-            if (e.touches) {
-
-                x =
-                    e.touches[0].clientX -
-                    rect.left;
-
-
-                y =
-                    e.touches[0].clientY -
-                    rect.top;
-
-            } else {
-
-                x =
-                    e.clientX -
-                    rect.left;
-
-
-                y =
-                    e.clientY -
-                    rect.top;
-            }
-
-
-            ctx.globalCompositeOperation =
-                "destination-out";
-
-
-            ctx.beginPath();
-
-
-            ctx.arc(
-                x,
-                y,
-                35,
-                0,
-                Math.PI * 2
-            );
-
-
-            ctx.fill();
-
-
-            checkScratchPercentage();
-        }
-
-
-
-        /* =====================================================
-           MOUSE SCRATCH
-        ===================================================== */
-
-        canvas.addEventListener(
-            "mousedown",
-            () => {
-                scratching = true;
-            }
-        );
-
-
-        canvas.addEventListener(
-            "mouseup",
-            () => {
-                scratching = false;
-            }
-        );
-
-
-        canvas.addEventListener(
-            "mouseleave",
-            () => {
-                scratching = false;
-            }
-        );
-
-
-        canvas.addEventListener(
-            "mousemove",
-            scratch
-        );
-
-
-
-        /* =====================================================
-           TOUCH SCRATCH
-        ===================================================== */
-
-        canvas.addEventListener(
-            "touchstart",
-            e => {
-
-                scratching = true;
-
-                scratch(e);
-
-                e.preventDefault();
-
-            },
-            {
-                passive: false
-            }
-        );
-
-
-        canvas.addEventListener(
-            "touchmove",
-            e => {
-
-                scratch(e);
-
-                e.preventDefault();
-
-            },
-            {
-                passive: false
-            }
-        );
-
-
-        canvas.addEventListener(
-            "touchend",
-            () => {
-
-                scratching = false;
-
-            }
-        );
-
-
-
-        /* =====================================================
-           DETECT SCRATCH COMPLETION
-        ===================================================== */
-
-        let messageOpened = false;
-
-
-        function checkScratchPercentage() {
-
-            if (messageOpened) {
-                return;
-            }
-
-
-            const pixels =
-                ctx.getImageData(
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                ).data;
-
-
-            let transparent = 0;
-
-
-            /*
-             * Sample pixels instead of checking
-             * every single pixel.
-             */
-
-            for (
-                let i = 3;
-                i < pixels.length;
-                i += 80
-            ) {
-
-                if (
-                    pixels[i] === 0
-                ) {
-
-                    transparent++;
-
-                }
-            }
-
-
-            const total =
-                pixels.length / 80;
-
-
-            const percentage =
-                transparent / total;
-
-
-            /*
-             * Once roughly 45% has been
-             * scratched, reveal the page.
-             */
-
-            if (
-                percentage > 0.45
-            ) {
-
-                messageOpened = true;
-
-
-                canvas.style.transition =
-                    "opacity 0.7s ease";
-
-
-                canvas.style.opacity =
-                    "0";
-
-
-                setTimeout(
-                    () => {
-
-                        canvas.style.display =
-                            "none";
-
-
-                        goToScreen(6);
-
-                    },
-                    800
-                );
-            }
-        }
-
-
-
-        /* =====================================================
-           YES BUTTON
-        ===================================================== */
-
-        function sayYes() {
-
-            goToScreen(7);
-
-            startHeartRain();
-        }
-
-
-
-        /* =====================================================
-           NO BUTTON
-        ===================================================== */
-
-        function moveNoButton() {
-
-            const button =
-                document.getElementById(
-                    "noButton"
-                );
-
-
-            const maxX =
-                Math.min(
-                    window.innerWidth / 2 - 80,
-                    130
-                );
-
-
-            const maxY = 80;
-
-
-            const x =
-                (Math.random() *
-                    maxX *
-                    2) -
-                maxX;
-
-
-            const y =
-                (Math.random() *
-                    maxY *
-                    2) -
-                maxY;
-
-
-            button.style.transform =
-                `translate(${x}px, ${y}px)`;
-
-
-            button.innerText =
-                "Are you sure? 😭";
-        }
-
-
-
-        /* =====================================================
-           FLOATING HEARTS
-        ===================================================== */
-
-        let heartRainStarted = false;
-
-
-        function startHeartRain() {
-
-            if (heartRainStarted) {
-                return;
-            }
-
-
-            heartRainStarted = true;
-
-
-            const container =
-                document.getElementById(
-                    "floatingHearts"
-                );
-
-
-            setInterval(
-                () => {
-
-                    const heart =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    heart.className =
-                        "floating-heart";
-
-
-                    heart.innerHTML =
-                        Math.random() > 0.3
-                            ? "❤️"
-                            : "💕";
-
-
-                    heart.style.left =
-                        Math.random() *
-                        100 +
-                        "%";
-
-
-                    heart.style.fontSize =
-                        (
-                            20 +
-                            Math.random() *
-                            30
-                        ) +
-                        "px";
-
-
-                    const duration =
-                        5 +
-                        Math.random() *
-                        6;
-
-
-                    heart.style.animationDuration =
-                        duration +
-                        "s";
-
-
-                    container.appendChild(
-                        heart
-                    );
-
-
-                    setTimeout(
-                        () => {
-
-                            heart.remove();
-
-                        },
-                        duration * 1000
-                    );
-
-                },
-                450
-            );
-        }
-
-
-
-        /* =====================================================
-           RESIZE
-        ===================================================== */
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                if (
-                    canvas.style.display !==
-                    "none"
-                ) {
-
-                    setupScratchCanvas();
-
-                }
-
-            }
-        );
-
-
-    </script>
-
+        // reset lastPoint so the line continues from the newly connected dot
+        lastPoint = getPoint(current);
+        redraw();
+        return;
+      }
+
+      // optional: if we are very far from current dot, we could cancel? but we keep dragging
+      redraw();
+    });
+
+    function stopDrag() {
+      if (!dragging) return;
+      dragging = false;
+      lastPoint = null;
+      redraw();
+    }
+
+    area.addEventListener("pointerup", stopDrag);
+    area.addEventListener("pointercancel", stopDrag);
+    area.addEventListener("lostpointercapture", stopDrag);
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+  }
+
+  createDotGame(games[0], 3);
+  createDotGame(games[1], 4);
+  createDotGame(games[2], 5);
+
+  /* =========================================================
+     SCRATCH CARD
+     ========================================================= */
+  function setupScratchCard() {
+    const canvas = document.getElementById("scratchCanvas");
+    const card = document.getElementById("scratchCard");
+    const ctx = canvas.getContext("2d");
+    let scratching = false;
+    let scratchedPixels = 0;
+    let completed = false;
+
+    function resize() {
+      const rect = card.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
+      gradient.addColorStop(0, "#8f243c");
+      gradient.addColorStop(.5, "#68202f");
+      gradient.addColorStop(1, "#42141f");
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, rect.width, rect.height);
+      ctx.globalAlpha = .12;
+      ctx.strokeStyle = "#ffd1da";
+      ctx.lineWidth = 1;
+      for (let x = -rect.height; x < rect.width; x += 18) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x + rect.height, rect.height);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function scratch(event) {
+      if (!scratching || completed) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(x, y, 32, 0, Math.PI * 2);
+      ctx.fill();
+      scratchedPixels++;
+      if (scratchedPixels > 80) {
+        completed = true;
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    canvas.addEventListener("pointerdown", event => {
+      scratching = true;
+      canvas.setPointerCapture(event.pointerId);
+      scratch(event);
+    });
+    canvas.addEventListener("pointermove", scratch);
+    canvas.addEventListener("pointerup", () => { scratching = false; });
+    canvas.addEventListener("pointercancel", () => { scratching = false; });
+    window.addEventListener("resize", resize);
+    resize();
+  }
+  setupScratchCard();
+
+  /* =========================================================
+     ANSWER LOGIC
+     ========================================================= */
+  let answerChosen = false;
+
+  function yesAnswer() {
+    if (answerChosen) return;
+    answerChosen = true;
+    showPage(7);
+    createHearts();
+  }
+
+  function noAnswer() {
+    if (answerChosen) return;
+    const button = document.querySelector(".choice:not(.yes)");
+    button.textContent = "Are you sure?";
+    button.style.transform = "scale(1.05)";
+    setTimeout(() => {
+      button.textContent = "No";
+      button.style.transform = "";
+    }, 1100);
+  }
+
+  /* =========================================================
+     FLOATING HEARTS
+     ========================================================= */
+  function createHearts() {
+    const container = document.getElementById("hearts");
+    if (container.children.length > 0) return;
+    for (let i = 0; i < 22; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = Math.random() > .2 ? "♥" : "❤";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.animationDelay = (Math.random() * 7) + "s";
+      heart.style.animationDuration = (6 + Math.random() * 6) + "s";
+      heart.style.fontSize = (18 + Math.random() * 28) + "px";
+      container.appendChild(heart);
+    }
+  }
+</script>
 </body>
 </html>
