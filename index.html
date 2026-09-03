@@ -193,8 +193,8 @@
 
     .dot.glowing {
       background: #ff6681;
-      box-shadow: 0 0 25px 8px rgba(255, 70, 110, .45);
-      transform: scale(1.2);
+      box-shadow: 0 0 30px 12px rgba(255, 70, 110, .6);
+      transform: scale(1.25);
     }
 
     .dot.connected {
@@ -579,7 +579,7 @@
   }
 
   /* =========================================================
-     FLUID DOT-CONNECTION GAME (drag continuous)
+     FLUID DOT-CONNECTION GAME (drag continuous, auto next glow)
      ========================================================= */
   const games = [
     { id: "game1", points: [[16,38],[61,35],[85,60],[39,69],[68,84]] },
@@ -654,14 +654,18 @@
       });
 
       ctx.shadowBlur = 0;
+      // draw live line from current dot to finger
       if (dragging && lastPoint && current < config.points.length - 1) {
         const start = getPoint(current);
         ctx.beginPath();
         ctx.moveTo(start.x, start.y);
         ctx.lineTo(lastPoint.x, lastPoint.y);
-        ctx.strokeStyle = "rgba(255,130,153,.65)";
+        ctx.strokeStyle = "rgba(255,130,153,.8)";
         ctx.lineWidth = 5;
+        ctx.shadowColor = "rgba(255,80,115,.4)";
+        ctx.shadowBlur = 10;
         ctx.stroke();
+        ctx.shadowBlur = 0;
       }
     }
 
@@ -672,7 +676,7 @@
 
     function dotAtPosition(x, y, index) {
       const p = getPoint(index);
-      return Math.hypot(x - p.x, y - p.y) < 36; // forgiving hit area
+      return Math.hypot(x - p.x, y - p.y) < 38; // generous hit area
     }
 
     // Start drag only if near the current dot
@@ -700,8 +704,10 @@
         current = nextIndex;
 
         if (current < dots.length - 1) {
+          // glow the next dot automatically
           dots[current].classList.add("glowing");
         } else {
+          // last dot connected
           dots[current].classList.remove("glowing");
           dots[current].classList.add("connected");
           completed = true;
@@ -717,7 +723,6 @@
         return;
       }
 
-      // optional: if we are very far from current dot, we could cancel? but we keep dragging
       redraw();
     });
 
