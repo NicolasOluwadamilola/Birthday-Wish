@@ -29,7 +29,7 @@ const pages = [
     id: 0,
     name: 'My Dearest 💔',
     heading: 'I\'m So Sorry',
-    message: `I've been doing a lot of thinking, and I realize I made a mistake.\nI let my pride get in the way, and I hurt you.\nI know saying "sorry" might not fix everything, but I need you to know that my regret is real.\nPlease know that you mean more to me than my ego ever did.\nI miss you. I miss us.`,
+    message: `I’ve been meaning to say this for a while, and I honestly don’t know the perfect way to start.\n I know I ignored your message for almost two weeks now, and I’m sorry. \n I was really upset by what happened, and at the time I felt like distancing myself was the only way I could deal with how angry I was. \nBut looking back, I know I let that silence go on for far too long.`,
     song: 'Chicago.mp3',
     bg: 'linear-gradient(145deg, #1e2b36, #3a4f60)'
   },
@@ -45,7 +45,7 @@ const pages = [
     id: 2,
     name: 'For You 💖',
     heading: 'I Miss Your Smile',
-    message: `The silence feels so loud without you.\nI miss your laugh, your voice, the way you make everything seem brighter.\nThe thought of losing you is the worst pain I've known.\nI'm here, ready to listen, ready to change, ready to do better.\nI just need a chance.`,
+    message: `What you said really hurt and pissed me off, and I won’t pretend that it didn’t affect me. \nI needed some time to process how I felt because I didn’t trust myself to respond without saying something out of anger. \n But I also realise that being hurt doesn’t justify shutting you out completely.`,
     song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #3a5568, #5a7a8e)'
   },
