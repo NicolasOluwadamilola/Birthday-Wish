@@ -29,43 +29,51 @@ const pages = [
     id: 0,
     name: 'My Dearest 💔',
     heading: 'I\'m So Sorry',
-    message: `I’ve been meaning to say this for a while, and I honestly don’t know the perfect way to start.\n I know I ignored your message for almost two weeks now, and I’m sorry. \n I was really upset by what happened, and at the time I felt like distancing myself was the only way I could deal with how angry I was. \nBut looking back, I know I let that silence go on for far too long.`,
-    song: 'Chicago.mp3',
+    message: `I've been doing a lot of thinking, and I realize I made a mistake.\nI let my pride get in the way, and I hurt you.\nI know saying "sorry" might not fix everything, but I need you to know that my regret is real.\nPlease know that you mean more to me than my ego ever did.\nI miss you. I miss us.`,
+    song: 'Chicago .mp3',
     bg: 'linear-gradient(145deg, #1e2b36, #3a4f60)'
   },
   {
     id: 1,
     name: 'To You 🌹',
     heading: 'I Was Wrong',
-    message: `What you said really hurt and pissed me off, and I won’t pretend that it didn’t affect me.\n I needed some time to process how I felt because I didn’t trust myself to respond without saying something out of anger.\n But I also realise that being hurt doesn’t justify shutting you out completely.`,
-    song: 'Chicago.mp3',
+    message: `I've had time to reflect, and I see things differently now.\nI was selfish, and I didn't appreciate you the way I should have.\nYou deserved better from me. I'm not making excuses, just trying to be honest.\nI hope you can find it in your heart to forgive me.`,
+    song: 'Chicago .mp3',
     bg: 'linear-gradient(145deg, #2d4050, #4a6478)'
   },
   {
     id: 2,
+    name: 'For You 💖',
+    heading: 'I Miss Your Smile',
+    message: `The silence feels so loud without you.\nI miss your laugh, your voice, the way you make everything seem brighter.\nThe thought of losing you is the worst pain I've known.\nI'm here, ready to listen, ready to change, ready to do better.\nI just need a chance.`,
+    song: 'Sade.mp3',
+    bg: 'linear-gradient(145deg, #3a5568, #5a7a8e)'
+  },
+  {
+    id: 3,
     name: 'Always & Forever ❤️',
     heading: 'Can We Try Again?',
-    message: `I’m genuinely sorry for how I handled it. You didn’t deserve to be met with silence for this long, regardless of how upset I was. \nI could have handled the situation with more maturity, and I take responsibility for that. I’m not sending this because I suddenly think what happened was okay or because my feelings have disappeared.\n I’m sending it because I know I could have handled my feelings and communicated them much better.`,
+    message: `I know things won't be the same overnight, and I'm not asking for that.\nAll I'm asking for is a chance to earn back your trust.\nI want to show you that you are my priority.\nI want to be the person you deserve.\nI'm sorry for everything, and I promise to do better.\nWith all my love.`,
     song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #4a6a7e, #6e8fa3)'
   },
   // ----- FORGIVE PAGE (id: 4) -----
   {
-    id: 3,
+    id: 4,
     name: 'One Last Question 💫',
     heading: 'Do You Forgive Me?',
-    message: `More than anything, I’m just really sorry. I’m sorry for letting things get to this point and for creating this distance between us.\n I miss how things were between us before all of this happened—the way we talked, the way we were with each other, and just having you close to me. I know we can’t simply erase what happened, but I honestly wish we could get back to that place again.\n I want us to be okay. I want us to find our way back to each other and feel like us again.\n I’m truly sorry. Can we takk?`,
-    song: 'Julius.mp3',
+    message: `I know I don't deserve it, but I'm asking with all my heart.\nCan you find it in you to forgive me?`,
+    song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #2a4050, #4a6a7e)',
     isForgivePage: true
   },
   // ----- CELEBRATORY PAGE (id: 5) -----
   {
-    id:5,
+    id: 5,
     name: 'You Said Yes! 🎉',
     heading: 'Thank You',
-    message: `You have no idea how much this means to me.\nI promise I'll do my best to make it up to you.\nI love you. ❤️`,
-    song: 'Julius.mp3',
+    message: `You have no idea how much this means to me.\nI promise I'll spend every day making it up to you.\nI love you. ❤️`,
+    song: 'Julius .mp3',
     bg: 'linear-gradient(145deg, #2a5a4a, #4a8a7a)',
     isCelebratory: true
   },
