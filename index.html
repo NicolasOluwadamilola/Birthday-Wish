@@ -137,95 +137,6 @@
       text-transform: uppercase;
     }
 
-    .progress {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: 26px 0 0;
-    }
-
-    .progress span {
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      background: #3c2028;
-    }
-
-    .progress span.active {
-      width: 38px;
-      border-radius: 20px;
-      background: var(--pink);
-      box-shadow: 0 0 15px rgba(255,75,108,.5);
-    }
-
-    .game-content {
-      width: min(94%, 680px);
-    }
-
-    .game-title {
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: 13px;
-    }
-
-    .game-area {
-      position: relative;
-      width: min(94vw, 600px);
-      height: min(105vw, 620px);
-      margin: 38px auto 0;
-      touch-action: none;
-      user-select: none;
-      cursor: pointer;
-    }
-
-    .dot {
-      position: absolute;
-      width: 34px;
-      height: 34px;
-      margin: -17px 0 0 -17px;
-      border-radius: 50%;
-      background: #75535b;
-      box-shadow: 0 0 0 0 rgba(255, 90, 120, 0);
-      transition: background .3s, transform .3s, box-shadow .3s;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .dot.glowing {
-      background: #ff6681;
-      box-shadow: 0 0 40px 20px rgba(255, 70, 110, .7);
-      transform: scale(1.4);
-      animation: pulse 1s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1.4); }
-      50% { transform: scale(1.6); }
-    }
-
-    .dot.connected {
-      background: #ffb0be;
-      box-shadow: 0 0 25px 8px rgba(255, 100, 130, .4);
-      transform: scale(1);
-      animation: none;
-    }
-
-    .game-instruction {
-      margin: 0 auto;
-      color: #dfcfd3;
-      font-size: 22px;
-      line-height: 1.4;
-    }
-
-    .game-hint {
-      margin-top: 14px;
-      color: #775c63;
-      letter-spacing: .35em;
-      font-size: 11px;
-      text-transform: uppercase;
-    }
-
     .scratch-content {
       width: min(92%, 730px);
     }
@@ -445,7 +356,6 @@
       .content { padding: 55px 0; }
       h1 { margin-top: 45px; }
       .primary-btn { margin-top: 45px; }
-      .game-area { height: 470px; margin-top: 35px; }
       .scratch-card { height: 300px; min-height: 0; }
       .message-content { padding-top: 65px; }
       .choices { gap: 12px; }
@@ -455,7 +365,6 @@
     @media (max-height: 700px) {
       .content { padding-top: 35px; padding-bottom: 35px; }
       h1 { margin-top: 35px; }
-      .game-area { height: 400px; }
     }
   </style>
 </head>
@@ -472,54 +381,8 @@
   </div>
 </section>
 
-<!-- PAGE 2 -->
+<!-- PAGE 2 - Scratch Card -->
 <section class="page" id="page2">
-  <div class="content game-content">
-    <div class="kicker game-title">Trace It · 1 of 3</div>
-    <div class="progress">
-      <span class="active"></span>
-      <span></span>
-      <span></span>
-    </div>
-    <div class="game-area" id="game1"></div>
-    <div class="game-instruction">Connect the stars, in order.</div>
-    <div class="game-hint">Start at the one that's glowing</div>
-  </div>
-</section>
-
-<!-- PAGE 3 -->
-<section class="page" id="page3">
-  <div class="content game-content">
-    <div class="kicker game-title">Trace It · 2 of 3</div>
-    <div class="progress">
-      <span></span>
-      <span class="active"></span>
-      <span></span>
-    </div>
-    <div class="game-area" id="game2"></div>
-    <div class="game-instruction">Connect the stars, in order.</div>
-    <div class="game-hint">Start at the one that's glowing</div>
-  </div>
-</section>
-
-<!-- PAGE 4 -->
-<section class="page" id="page4">
-  <div class="content game-content">
-    <div class="kicker game-title">Trace It · 3 of 3</div>
-    <div class="progress">
-      <span></span>
-      <span></span>
-      <span class="active"></span>
-    </div>
-    <div class="game-area" id="heartGame"></div>
-    <div class="game-instruction" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:#ff9caf;">
-      And some are obvious, the moment you connect them.
-    </div>
-  </div>
-</section>
-
-<!-- PAGE 5 -->
-<section class="page" id="page5">
   <div class="content scratch-content">
     <div class="section-label">Sealed</div>
     <div class="scratch-card" id="scratchCard">
@@ -533,12 +396,12 @@
     </div>
     <div class="scratch-label">It was hidden on purpose.</div>
     <div class="divider"></div>
-    <button class="primary-btn" onclick="showPage(6)">Continue</button>
+    <button class="primary-btn" onclick="showPage(3)">Continue</button>
   </div>
 </section>
 
-<!-- PAGE 6 -->
-<section class="page" id="page6">
+<!-- PAGE 3 - Message -->
+<section class="page" id="page3">
   <div class="content message-content">
     <div class="section-label">For Baby</div>
     <div class="message">
@@ -558,8 +421,8 @@
   </div>
 </section>
 
-<!-- PAGE 7 -->
-<section class="page" id="page7">
+<!-- PAGE 4 - Final -->
+<section class="page" id="page4">
   <div class="hearts" id="hearts"></div>
   <div class="content final-content">
     <div class="kicker">Sealed</div>
@@ -586,231 +449,6 @@
       window.scrollTo(0, 0);
     }
   }
-
-  /* =========================================================
-     FLUID DOT-CONNECTION GAME
-     - First dot glows automatically
-     - Click on glowing dot → glow moves to next dot instantly
-     - Drag to draw lines between dots
-     ========================================================= */
-  const games = [
-    { id: "game1", points: [[16,38],[61,35],[85,60],[39,69],[68,84]] },
-    { id: "game2", points: [[49,23],[74,27],[25,39],[16,66],[41,83],[68,86]] },
-    { id: "heartGame", points: [[17,34],[31,15],[52,33],[68,16],[84,34],[82,56],[65,76],[50,91],[34,76],[18,56],[17,34]] }
-  ];
-
-  function createDotGame(config, nextPage) {
-    const area = document.getElementById(config.id);
-    const canvas = document.createElement("canvas");
-    canvas.id = config.id + "-canvas";
-    canvas.style.position = "absolute";
-    canvas.style.inset = "0";
-    canvas.style.width = "100%";
-    canvas.style.height = "100%";
-    canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = "2";
-    area.appendChild(canvas);
-    const ctx = canvas.getContext("2d");
-    const dots = [];
-
-    config.points.forEach((point, index) => {
-      const dot = document.createElement("div");
-      dot.className = "dot";
-      dot.style.left = point[0] + "%";
-      dot.style.top = point[1] + "%";
-      if (index === 0) dot.classList.add("glowing");
-      dot.dataset.index = index;
-      area.appendChild(dot);
-      dots.push(dot);
-    });
-
-    let current = 0;
-    let isDragging = false;
-    let pointerPos = null;
-    let drawnSegments = [];
-    let completed = false;
-    let glowMoved = false;
-
-    function resizeCanvas() {
-      const rect = area.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      redraw();
-    }
-
-    function getPoint(index) {
-      const rect = area.getBoundingClientRect();
-      return {
-        x: rect.width * config.points[index][0] / 100,
-        y: rect.height * config.points[index][1] / 100
-      };
-    }
-
-    function redraw() {
-      const rect = area.getBoundingClientRect();
-      ctx.clearRect(0, 0, rect.width, rect.height);
-      
-      // Draw connected segments
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.lineWidth = 6;
-      ctx.strokeStyle = "#ff8299";
-      ctx.shadowColor = "rgba(255,80,115,.55)";
-      ctx.shadowBlur = 14;
-
-      drawnSegments.forEach(segment => {
-        const a = getPoint(segment[0]);
-        const b = getPoint(segment[1]);
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      });
-
-      ctx.shadowBlur = 0;
-      
-      // Draw live line from current dot to pointer
-      if (isDragging && pointerPos && current < config.points.length - 1) {
-        const start = getPoint(current);
-        ctx.beginPath();
-        ctx.moveTo(start.x, start.y);
-        ctx.lineTo(pointerPos.x, pointerPos.y);
-        ctx.strokeStyle = "rgba(255,130,153,.85)";
-        ctx.lineWidth = 5;
-        ctx.shadowColor = "rgba(255,80,115,.4)";
-        ctx.shadowBlur = 10;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-      }
-    }
-
-    function getPointerPos(event) {
-      const rect = area.getBoundingClientRect();
-      return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top
-      };
-    }
-
-    function isOverDot(x, y, index) {
-      const p = getPoint(index);
-      return Math.hypot(x - p.x, y - p.y) < 45;
-    }
-
-    // Click on glowing dot: move glow to next dot instantly
-    area.addEventListener("click", (event) => {
-      if (completed || current >= config.points.length - 1) return;
-      if (glowMoved) return; // Only allow click to move glow once per dot
-      
-      const pos = getPointerPos(event);
-      if (!isOverDot(pos.x, pos.y, current)) return;
-      
-      // Move glow to next dot
-      const nextIndex = current + 1;
-      dots[current].classList.remove("glowing");
-      dots[current].classList.add("connected");
-      
-      // Draw the line immediately
-      drawnSegments.push([current, nextIndex]);
-      
-      current = nextIndex;
-      glowMoved = true;
-      
-      if (current < dots.length - 1) {
-        dots[current].classList.add("glowing");
-      } else {
-        // Last dot - complete!
-        dots[current].classList.add("glowing");
-        // Complete immediately when last dot glows
-        setTimeout(() => {
-          dots[current].classList.remove("glowing");
-          dots[current].classList.add("connected");
-          completed = true;
-          redraw();
-          setTimeout(() => { showPage(nextPage); }, 700);
-        }, 500);
-        redraw();
-        return;
-      }
-      
-      redraw();
-    });
-
-    // Pointer down: start dragging from current dot
-    area.addEventListener("pointerdown", (event) => {
-      if (completed || current >= config.points.length - 1) return;
-      if (!glowMoved) return; // Must click first to move glow
-      
-      const pos = getPointerPos(event);
-      if (!isOverDot(pos.x, pos.y, current)) return;
-      
-      isDragging = true;
-      pointerPos = pos;
-      area.setPointerCapture(event.pointerId);
-      redraw();
-    });
-
-    // Pointer move: update line and check for dot connections
-    area.addEventListener("pointermove", (event) => {
-      if (!isDragging || completed) return;
-      
-      pointerPos = getPointerPos(event);
-      const nextIndex = current + 1;
-
-      // Check if we've reached the next dot
-      if (isOverDot(pointerPos.x, pointerPos.y, nextIndex)) {
-        // Connect current to next
-        drawnSegments.push([current, nextIndex]);
-        dots[current].classList.remove("glowing");
-        dots[current].classList.add("connected");
-        current = nextIndex;
-        glowMoved = false; // Reset so click can move glow again
-
-        if (current < dots.length - 1) {
-          // Glow the next dot
-          dots[current].classList.add("glowing");
-          pointerPos = getPoint(current);
-        } else {
-          // Last dot connected - complete!
-          dots[current].classList.remove("glowing");
-          dots[current].classList.add("connected");
-          completed = true;
-          isDragging = false;
-          pointerPos = null;
-          redraw();
-          setTimeout(() => { showPage(nextPage); }, 700);
-          return;
-        }
-        redraw();
-        return;
-      }
-
-      redraw();
-    });
-
-    // Stop dragging
-    function stopDrag() {
-      if (!isDragging) return;
-      isDragging = false;
-      pointerPos = null;
-      redraw();
-    }
-
-    area.addEventListener("pointerup", stopDrag);
-    area.addEventListener("pointercancel", stopDrag);
-    area.addEventListener("lostpointercapture", stopDrag);
-    
-    // Handle resize
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-  }
-
-  // Initialize all three games
-  createDotGame(games[0], 3);
-  createDotGame(games[1], 4);
-  createDotGame(games[2], 5);
 
   /* =========================================================
      SCRATCH CARD
@@ -896,7 +534,7 @@
   function yesAnswer() {
     if (answerChosen) return;
     answerChosen = true;
-    showPage(7);
+    showPage(4);
     createHearts();
   }
 
