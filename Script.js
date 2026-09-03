@@ -243,7 +243,7 @@ function renderCelebratoryPage(page) {
   // ---- WhatsApp redirect ----
   document.getElementById('tellToMyFace').addEventListener('click', () => {
     // Replace with your WhatsApp number (without +)
-    const phoneNumber = '2348123456789'; // <-- CHANGE THIS
+    const phoneNumber = '2349061331551'; // <-- CHANGE THIS
     window.open(`https://wa.me/${phoneNumber}`, '_blank');
   });
 }
