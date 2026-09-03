@@ -1,46 +1,181 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>I'm Sorry 💔</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0306">
+    <title>I'm Sorry 💔</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <div id="startScreen" style="
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  font-size:2em;
-  cursor:pointer;
-  z-index:1000;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-direction: column;
-  line-height: 1.5;
-">
-  <span style="font-family: 'Great Vibes', cursive; font-size: 3rem;">💔</span>
-  <span>Tap anywhere to begin</span>
-</div>
-  <!-- 🎀 Ribbons (now representing falling tears) -->
-  <div class="ribbons"></div>
 
-  <!-- 🌸 Music Player (hidden controls) -->
-  <audio id="bgMusic" loop autoplay></audio>
+    <!-- Start Screen Overlay -->
+    <div id="startScreen" style="
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+        flex-direction: column;
+        font-family: 'Inter', sans-serif;
+    ">
+        <span style="font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: #ff9aae; margin-bottom: 20px;">💔</span>
+        <span style="font-size: 1.8rem; font-weight: 300; margin-bottom: 10px;">Tap anywhere to begin</span>
+        <span style="font-size: 1rem; color: #b99ba2; letter-spacing: 0.3em; text-transform: uppercase;">with music</span>
+    </div>
 
-  <!-- SPA Container -->
-  <div class="page-container">
-    <!-- Page content will be injected here -->
-  </div>
+    <!-- Music Player -->
+    <audio id="bgMusic" loop></audio>
 
-  <script src="Script.js"></script>
+    <!-- Page 1: Landing -->
+    <section class="page active" id="page1">
+        <div class="content">
+            <div class="kicker">A Message</div>
+            <h1>Hey Baby,</h1>
+            <div class="subtitle">
+                I need to tell you<br>
+                something important.
+            </div>
+            <button class="primary-btn" onclick="showPage(2)">What is it?</button>
+            <div class="footer-label">For you, always</div>
+        </div>
+    </section>
+
+    <!-- Page 2: First Message -->
+    <section class="page" id="page2">
+        <div class="content message-content">
+            <div class="section-label">Page 1 of 4</div>
+            <div class="progress">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="message-card">
+                <p>
+                    I know I messed up. I've been replaying everything in my head,
+                    and I can't stop thinking about how I made you feel.
+                </p>
+                <p>
+                    You didn't deserve any of that. You deserve someone who
+                    listens, who understands, who doesn't let their pride get in the way.
+                </p>
+            </div>
+            <button class="primary-btn" onclick="showPage(3)">Continue →</button>
+        </div>
+    </section>
+
+    <!-- Page 3: Second Message -->
+    <section class="page" id="page3">
+        <div class="content message-content">
+            <div class="section-label">Page 2 of 4</div>
+            <div class="progress">
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="message-card">
+                <p>
+                    I'm not here to make excuses. I'm here to say that
+                    <strong>I was wrong</strong>, and I'm genuinely sorry.
+                </p>
+                <p>
+                    The last thing I ever wanted was to hurt you. And knowing
+                    that I did hurts more than I can put into words.
+                </p>
+            </div>
+            <button class="primary-btn" onclick="showPage(4)">Continue →</button>
+        </div>
+    </section>
+
+    <!-- Page 4: Third Message -->
+    <section class="page" id="page4">
+        <div class="content message-content">
+            <div class="section-label">Page 3 of 4</div>
+            <div class="progress">
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+            </div>
+            <div class="message-card">
+                <p>
+                    You mean so much to me. More than I've probably ever shown.
+                    And the thought of losing you because of my mistakes...
+                </p>
+                <p>
+                    It's the worst feeling in the world. I miss you. I miss us.
+                    I miss the way you smile at me.
+                </p>
+            </div>
+            <button class="primary-btn" onclick="showPage(5)">Continue →</button>
+        </div>
+    </section>
+
+    <!-- Page 5: The Apology -->
+    <section class="page" id="page5">
+        <div class="content message-content">
+            <div class="section-label">Page 4 of 4</div>
+            <div class="progress">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+            </div>
+            <div class="message-card final-message">
+                <p class="apology-text">
+                    I'm sorry, Baby. For everything.
+                </p>
+                <p>
+                    I don't expect you to forgive me right away. I just wanted
+                    you to know that I understand what I did wrong, and I
+                    promise to do better.
+                </p>
+                <div class="question">
+                    Can we try again?
+                </div>
+            </div>
+            <div class="choices">
+                <button class="choice yes" onclick="yesAnswer()">Yes 💖</button>
+                <button class="choice" onclick="noAnswer()">No</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 6: Final -->
+    <section class="page" id="page6">
+        <div class="hearts" id="hearts"></div>
+        <div class="content final-content">
+            <div class="kicker">You Said Yes</div>
+            <h1 class="final-title">Thank You</h1>
+            <div class="final-text">
+                You just made my heart skip a beat.
+            </div>
+            <div class="final-subtitle">
+                I promise I'll make it up to you.
+            </div>
+            <a
+                class="whatsapp-btn"
+                href="https://wa.me/2348012345678?text=I%20said%20yes.%20I'm%20ready%20to%20talk.%20❤️"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Let's talk 💬
+            </a>
+            <div class="sealed">Forever grateful · Your love</div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
 </body>
 </html>
