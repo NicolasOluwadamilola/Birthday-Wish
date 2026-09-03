@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0b0306">
   <title>One Message</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap');
-
     * {
       margin: 0;
       padding: 0;
@@ -30,6 +29,43 @@
       color: var(--text);
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      margin: 0;
+    }
+
+    /* Start Screen Overlay */
+    #startScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+      font-family: 'Poppins', sans-serif;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    #startScreen span {
+      font-size: 3em;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    #startScreen .sub {
+      font-size: 0.6em;
+      opacity: 0.7;
     }
 
     .page {
@@ -66,6 +102,7 @@
       position: relative;
       z-index: 2;
       text-align: center;
+      padding: 40px 0;
     }
 
     .kicker {
@@ -87,41 +124,68 @@
       box-shadow: 0 0 15px rgba(255,60,100,.45);
     }
 
+    .name {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(40px, 10vw, 80px);
+      margin: 20px 0;
+      text-shadow: 0 0 20px #ff5e78;
+      animation: glowPulse 2s infinite alternate;
+      color: #fff;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 10px #ff9a9e, 0 0 20px #ff5e78; }
+      to { text-shadow: 0 0 20px #fff, 0 0 40px #ff5e78; }
+    }
+
     h1 {
-      margin: 62px 0 22px;
+      margin: 20px 0 30px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(60px, 14vw, 108px);
+      font-size: clamp(40px, 10vw, 80px);
       font-weight: 500;
-      line-height: .9;
+      line-height: 1.1;
       letter-spacing: -.04em;
+    }
+
+    .glow {
+      text-shadow: 0 0 5px #fff, 0 0 10px #ff9a9e, 0 0 20px #ff5e78, 0 0 40px #ff5e78;
+      color: #fff;
     }
 
     .subtitle {
       max-width: 620px;
       margin: 0 auto;
       color: #dccbd0;
-      font-size: clamp(21px, 5vw, 30px);
-      line-height: 1.5;
+      font-size: clamp(18px, 4vw, 28px);
+      line-height: 1.6;
       font-weight: 300;
+    }
+
+    .handwriting {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: clamp(16px, 3vw, 22px);
+      line-height: 1.9;
+      color: #e5d4d8;
+      max-width: 700px;
+      margin: 20px auto;
+      white-space: pre-line;
+      text-align: center;
     }
 
     .primary-btn, .secondary-btn {
       border: 0;
       cursor: pointer;
       font: 600 18px 'Inter', sans-serif;
+      padding: 16px 35px;
+      border-radius: 999px;
+      transition: transform .2s, box-shadow .2s;
+      margin-top: 30px;
     }
 
     .primary-btn {
-      margin-top: 55px;
-      min-width: 210px;
-      padding: 21px 42px;
-      border-radius: 999px;
       color: white;
       background: linear-gradient(135deg, #f34767, #e72e51);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.08),
-        0 15px 45px rgba(239,48,81,.25);
-      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 15px 45px rgba(239,48,81,.25);
     }
 
     .primary-btn:hover {
@@ -130,13 +194,14 @@
     }
 
     .footer-label {
-      margin-top: 75px;
+      margin-top: 50px;
       color: #70565d;
       letter-spacing: .34em;
       font-size: 11px;
       text-transform: uppercase;
     }
 
+    /* Scratch Card */
     .scratch-content {
       width: min(92%, 730px);
     }
@@ -233,36 +298,37 @@
       margin: 45px 0;
     }
 
+    /* Message Page */
     .message-content {
-      padding: 90px 0 80px;
+      padding: 40px 0 60px;
     }
 
     .message {
       max-width: 760px;
-      margin: 55px auto 0;
+      margin: 30px auto 0;
       color: #e5d4d8;
-      font-size: clamp(19px, 4.4vw, 27px);
+      font-size: clamp(17px, 3.5vw, 24px);
       line-height: 1.9;
       font-weight: 300;
     }
 
     .message p {
-      margin: 0 0 38px;
+      margin: 0 0 30px;
     }
 
     .question {
-      margin: 58px auto;
+      margin: 40px auto;
       color: #ff9daf;
-      font: italic 600 clamp(32px, 7vw, 54px)/1.15 'Cormorant Garamond', serif;
+      font: italic 600 clamp(28px, 6vw, 48px)/1.15 'Cormorant Garamond', serif;
     }
 
     .signature {
-      margin-top: 60px;
+      margin-top: 40px;
       font: 500 34px 'Cormorant Garamond', serif;
     }
 
     .choice-note {
-      margin: 50px auto 25px;
+      margin: 40px auto 25px;
       color: #70565d;
       font-size: 14px;
       line-height: 1.7;
@@ -275,11 +341,12 @@
       gap: 25px;
       margin-top: 25px;
       padding-bottom: 30px;
+      flex-wrap: wrap;
     }
 
     .choice {
-      min-width: 170px;
-      padding: 19px 30px;
+      min-width: 150px;
+      padding: 16px 28px;
       border-radius: 999px;
       background: transparent;
       color: #d7c1c6;
@@ -300,6 +367,7 @@
       transform: translateY(-2px);
     }
 
+    /* Final Page */
     .final-content {
       width: min(92%, 700px);
     }
@@ -327,7 +395,7 @@
     }
 
     .final-title {
-      margin: 0 0 45px;
+      margin: 0 0 30px;
       font-size: clamp(80px, 20vw, 150px);
       background: linear-gradient(90deg, #fff, #ff9db0);
       -webkit-background-clip: text;
@@ -337,12 +405,12 @@
 
     .final-text {
       color: #e8d6da;
-      font-size: clamp(21px, 5vw, 30px);
+      font-size: clamp(20px, 4vw, 28px);
       line-height: 1.55;
     }
 
     .final-subtitle {
-      margin: 45px 0 60px;
+      margin: 30px 0 40px;
       color: #ff9db0;
       font: italic 500 32px 'Cormorant Garamond', serif;
     }
@@ -353,7 +421,7 @@
       justify-content: center;
       gap: 12px;
       width: min(100%, 520px);
-      padding: 23px 30px;
+      padding: 20px 28px;
       border-radius: 999px;
       color: white;
       text-decoration: none;
@@ -369,14 +437,14 @@
     }
 
     .sealed {
-      margin-top: 55px;
+      margin-top: 40px;
       color: #765b63;
       letter-spacing: .4em;
       font-size: 11px;
       text-transform: uppercase;
     }
 
-    /* Music control button */
+    /* Music Control */
     .music-control {
       position: fixed;
       bottom: 25px;
@@ -406,14 +474,56 @@
       opacity: 0.5;
     }
 
+    /* Ribbons - from birthday design */
+    .ribbons {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .ribbon {
+      position: absolute;
+      width: 10px;
+      height: 40px;
+      opacity: 0.6;
+      border-radius: 3px;
+      animation: fall linear infinite;
+    }
+
+    .ribbon:nth-child(3n) {
+      background: #ff5e78;
+    }
+    .ribbon:nth-child(3n+1) {
+      background: #ffd166;
+    }
+    .ribbon:nth-child(3n+2) {
+      background: #06d6a0;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% {
+        transform: translateY(110vh) translateX(-20px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
     @media (max-width: 600px) {
-      .content { padding: 55px 0; }
-      h1 { margin-top: 45px; }
-      .primary-btn { margin-top: 45px; }
+      .content { padding: 30px 0; }
       .scratch-card { height: 300px; min-height: 0; }
-      .message-content { padding-top: 65px; }
+      .message-content { padding-top: 40px; }
       .choices { gap: 12px; }
-      .choice { min-width: 135px; padding: 17px 20px; }
+      .choice { min-width: 120px; padding: 14px 20px; }
       .music-control {
         bottom: 15px;
         right: 15px;
@@ -421,15 +531,33 @@
         height: 42px;
         font-size: 18px;
       }
-    }
-
-    @media (max-height: 700px) {
-      .content { padding-top: 35px; padding-bottom: 35px; }
-      h1 { margin-top: 35px; }
+      #startScreen {
+        font-size: 1.2em;
+        padding: 20px;
+      }
+      #startScreen span {
+        font-size: 2em;
+      }
     }
   </style>
 </head>
 <body>
+
+<!-- Start Screen -->
+<div id="startScreen">
+  <span>🎵</span>
+  Tap anywhere to start
+  <div class="sub">✨ A message for you ✨</div>
+</div>
+
+<!-- 🎀 Ribbons -->
+<div class="ribbons" id="ribbonsContainer"></div>
+
+<!-- 🎵 Music Player -->
+<audio id="bgMusic" loop></audio>
+
+<!-- Music Control Button -->
+<button class="music-control" id="musicControl" aria-label="Toggle music">🔊</button>
 
 <!-- ============================================================
      🎵 MUSIC CONFIGURATION - EDIT YOUR SONGS HERE
@@ -438,45 +566,65 @@
   // ============================================================
   //  SONG CONFIGURATION
   //  Place your audio files in the same folder as this HTML file
-  //  or in a subfolder like 'audio/'
   // ============================================================
   
   const SONG_CONFIG = {
     // First song - plays on pages 1, 2, and 3
-    // Replace 'song1.mp3' with your actual filename
     song1: {
       // If your song is in the same folder:
-      url: "raindancecut.mp3",
-      // If your song is in a subfolder called 'audio':
-      // url: "audio/song1.mp3",
+      url: "song1.mp3",
       pages: [1, 2, 3]
     },
     // Second song - plays on pages 4 and beyond
-    // Replace 'song2.mp3' with your actual filename
     song2: {
-      // If your song is in the same folder:
       url: "song2.mp3",
-      // If your song is in a subfolder called 'audio':
-      // url: "audio/song2.mp3",
       pages: [4]
     }
   };
   
   // ============================================================
-  //  END OF MUSIC CONFIGURATION
+  //  PAGE DATA
   // ============================================================
+  
+  const pages = [
+    {
+      id: 1,
+      name: "Hi Baby, 👋",
+      heading: "Vedth wants to tell you something.",
+      message: "",
+      type: "intro"
+    },
+    {
+      id: 2,
+      name: "💌",
+      heading: "A Message For You",
+      message: "",
+      type: "scratch"
+    },
+    {
+      id: 3,
+      name: "For Baby 💖",
+      heading: "I'm Sorry",
+      message: "Baby, I know an apology is easy to type and much harder to prove. So I don't want this page to be just pretty words.\n\nI am sorry for the way I made you feel. You deserved better from me in that moment, and I take responsibility for that.\n\nI care about you far too much to pretend that what happened doesn't matter. It does. You do.\n\nSo — no need for too much talk, and no hiding it inside a joke this time:",
+      type: "message"
+    },
+    {
+      id: 4,
+      name: "💕",
+      heading: "Yes!",
+      message: "Baby. You have no idea what you just did to my week.\n\nNow come and say it to my face.",
+      type: "final"
+    }
+  ];
 </script>
 
-<!-- Music Control Button -->
-<button class="music-control" id="musicControl" aria-label="Toggle music">🔊</button>
-
-<!-- PAGE 1 -->
+<!-- PAGE 1 - Intro -->
 <section class="page active" id="page1">
   <div class="content">
     <div class="kicker">One Message</div>
-    <h1>Hi Baby,</h1>
+    <h1 class="name">Hi Baby, 👋</h1>
     <div class="subtitle">Vedth wants to tell you<br>something.</div>
-    <button class="primary-btn" onclick="showPage(2)">What?</button>
+    <button class="primary-btn" onclick="goToPage(2)">What?</button>
     <div class="footer-label">Made for one person</div>
   </div>
 </section>
@@ -497,7 +645,7 @@
     <div class="scratch-label">Scratch the surface to reveal</div>
     <div class="scratch-hint" id="scratchHint">✧ drag your finger to scratch ✧</div>
     <div class="divider"></div>
-    <button class="primary-btn" id="continueBtn" onclick="showPage(3)" style="opacity:0.5;pointer-events:none;transition:opacity 0.5s;">Continue</button>
+    <button class="primary-btn" id="continueBtn" onclick="goToPage(3)" style="opacity:0.5;pointer-events:none;transition:opacity 0.5s;">Continue</button>
   </div>
 </section>
 
@@ -537,7 +685,58 @@
 
 <script>
   /* =========================================================
-     BACKGROUND MUSIC - Using external audio files
+     START SCREEN
+     ========================================================= */
+  const startScreen = document.getElementById('startScreen');
+  
+  function startExperience() {
+    startScreen.style.display = 'none';
+    // Start music
+    if (typeof startBackgroundMusic === 'function') {
+      startBackgroundMusic();
+    }
+  }
+
+  startScreen.addEventListener('click', startExperience);
+  startScreen.addEventListener('touchstart', startExperience);
+
+  /* =========================================================
+     RIBBONS (from birthday design)
+     ========================================================= */
+  function createRibbon() {
+    const container = document.getElementById('ribbonsContainer');
+    if (!container) return;
+    const ribbon = document.createElement('div');
+    ribbon.classList.add('ribbon');
+    ribbon.style.left = Math.random() * window.innerWidth + 'px';
+    ribbon.style.animationDuration = (4 + Math.random() * 6) + 's';
+    ribbon.style.animationDelay = Math.random() * 2 + 's';
+    ribbon.style.opacity = 0.3 + Math.random() * 0.5;
+    ribbon.style.height = (20 + Math.random() * 30) + 'px';
+    ribbon.style.width = (6 + Math.random() * 8) + 'px';
+    container.appendChild(ribbon);
+    setTimeout(() => ribbon.remove(), 10000);
+  }
+
+  // Start ribbons after user interaction
+  let ribbonsStarted = false;
+  
+  function startRibbons() {
+    if (ribbonsStarted) return;
+    ribbonsStarted = true;
+    setInterval(createRibbon, 300);
+    // Create initial ribbons
+    for (let i = 0; i < 10; i++) {
+      setTimeout(createRibbon, i * 200);
+    }
+  }
+
+  // Start ribbons on first interaction
+  document.addEventListener('click', startRibbons, { once: true });
+  document.addEventListener('touchstart', startRibbons, { once: true });
+
+  /* =========================================================
+     BACKGROUND MUSIC
      ========================================================= */
   (function() {
     let audioElement = null;
@@ -546,21 +745,15 @@
     let musicStarted = false;
     let currentPageNumber = 1;
 
-    // Get the song URL for a given page
     function getSongForPage(pageNum) {
       const config = window.SONG_CONFIG || {};
       
-      // Check if page belongs to song1
       if (config.song1 && config.song1.pages && config.song1.pages.includes(pageNum)) {
         return config.song1.url;
       }
-      
-      // Check if page belongs to song2
       if (config.song2 && config.song2.pages && config.song2.pages.includes(pageNum)) {
         return config.song2.url;
       }
-      
-      // Default to song1 if no match
       return config.song1 ? config.song1.url : null;
     }
 
@@ -568,7 +761,7 @@
       if (!url) return null;
       const audio = new Audio(url);
       audio.loop = true;
-      audio.volume = 0.5;
+      audio.volume = 0.4;
       audio.preload = 'auto';
       return audio;
     }
@@ -579,7 +772,6 @@
       const url = getSongForPage(currentPageNumber);
       if (!url) {
         console.warn('No song URL found for page', currentPageNumber);
-        console.warn('Make sure your audio files are in the same folder as this HTML file');
         return;
       }
       
@@ -598,21 +790,16 @@
       currentPageNumber = pageNum;
       const newUrl = getSongForPage(pageNum);
       
-      // If same song or no URL, do nothing
       if (newUrl === currentSong || !newUrl) return;
       
-      // Stop current audio
       if (audioElement) {
         audioElement.pause();
         audioElement = null;
       }
       
-      // Create and play new song
       audioElement = createAudio(newUrl);
       if (audioElement) {
-        audioElement.play().catch(e => {
-          console.log('Autoplay prevented, waiting for user interaction');
-        });
+        audioElement.play().catch(e => console.log('Autoplay prevented'));
         currentSong = newUrl;
         musicStarted = true;
         updateMusicButton();
@@ -628,14 +815,11 @@
       isMuted = !isMuted;
       
       if (isMuted) {
-        if (audioElement) {
-          audioElement.pause();
-        }
+        if (audioElement) audioElement.pause();
       } else {
         if (audioElement) {
           audioElement.play().catch(e => console.log('Error resuming audio:', e));
         } else {
-          // Recreate audio if needed
           const url = getSongForPage(currentPageNumber);
           if (url) {
             audioElement = createAudio(url);
@@ -663,18 +847,6 @@
       }
     }
 
-    // Handle first click to start music
-    function handleFirstClick() {
-      if (!musicStarted) {
-        startMusic();
-      }
-      document.removeEventListener('click', handleFirstClick);
-      document.removeEventListener('touchstart', handleFirstClick);
-    }
-
-    document.addEventListener('click', handleFirstClick);
-    document.addEventListener('touchstart', handleFirstClick);
-
     // Music control button
     const musicBtn = document.getElementById('musicControl');
     if (musicBtn) {
@@ -684,47 +856,20 @@
       });
     }
 
-    // Expose functions globally
     window.startBackgroundMusic = startMusic;
     window.switchBackgroundMusic = switchSong;
     window.toggleBackgroundMusic = toggleMusic;
     window.musicStarted = () => musicStarted;
-
-    // Check for page changes
-    const originalShowPage = window.showPage;
-    window.showPage = function(number) {
-      if (originalShowPage) {
-        originalShowPage(number);
-      }
-      // Switch music if page changed
-      if (number !== currentPageNumber) {
-        switchSong(number);
-      }
-    };
-
-    // Also handle the "What?" button click
-    document.addEventListener('click', function(e) {
-      const target = e.target.closest('[onclick]');
-      if (target && target.getAttribute('onclick') && target.getAttribute('onclick').includes('showPage')) {
-        // The showPage function will handle the music switch
-        setTimeout(() => {
-          if (!musicStarted) {
-            startMusic();
-          }
-        }, 100);
-      }
-    });
+    window.getCurrentPage = () => currentPageNumber;
 
   })();
 
   /* =========================================================
-     PAGE NAVIGATION (overridden by music system)
+     PAGE NAVIGATION
      ========================================================= */
   let currentPage = 1;
 
-  // Override showPage to work with music system
-  const originalShowPage = window.showPage || function() {};
-  window.showPage = function(number) {
+  function goToPage(number) {
     document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
     const target = document.getElementById("page" + number);
     if (target) {
@@ -733,7 +878,7 @@
       window.scrollTo(0, 0);
     }
     
-    // Switch music for this page
+    // Switch music
     if (typeof window.switchBackgroundMusic === 'function') {
       window.switchBackgroundMusic(number);
     }
@@ -746,30 +891,10 @@
         }
       }, 100);
     }
-  };
+  }
 
-  // Also update music when page is shown via other means
-  document.addEventListener('click', function(e) {
-    // Check if any button with showPage was clicked
-    const btn = e.target.closest('[onclick*="showPage"]');
-    if (btn) {
-      // The onclick will handle it, but we ensure music starts
-      setTimeout(() => {
-        if (typeof window.startBackgroundMusic === 'function') {
-          window.startBackgroundMusic();
-        }
-      }, 200);
-    }
-  });
-
-  // Override yesAnswer to ensure music switches
-  const originalYesAnswer = window.yesAnswer;
-  window.yesAnswer = function() {
-    if (originalYesAnswer) {
-      originalYesAnswer();
-    }
-    // Music will be switched by showPage(4) call
-  };
+  // Expose for onclick
+  window.goToPage = goToPage;
 
   /* =========================================================
      SCRATCH CARD
@@ -780,6 +905,8 @@
     const secretMessage = document.getElementById("secretMessage");
     const continueBtn = document.getElementById("continueBtn");
     const scratchHint = document.getElementById("scratchHint");
+    if (!canvas || !card) return;
+    
     const ctx = canvas.getContext("2d");
     let isScratching = false;
     let scratchCount = 0;
@@ -906,7 +1033,8 @@
     resize();
   }
 
-  setupScratchCard();
+  // Initialize scratch card
+  setTimeout(setupScratchCard, 100);
 
   /* =========================================================
      ANSWER LOGIC
@@ -916,7 +1044,7 @@
   function yesAnswer() {
     if (answerChosen) return;
     answerChosen = true;
-    showPage(4);
+    goToPage(4);
     createHearts();
   }
 
@@ -931,12 +1059,15 @@
     }, 1100);
   }
 
+  window.yesAnswer = yesAnswer;
+  window.noAnswer = noAnswer;
+
   /* =========================================================
      FLOATING HEARTS
      ========================================================= */
   function createHearts() {
     const container = document.getElementById("hearts");
-    if (container.children.length > 0) return;
+    if (!container || container.children.length > 0) return;
     for (let i = 0; i < 22; i++) {
       const heart = document.createElement("div");
       heart.className = "heart";
@@ -948,6 +1079,18 @@
       container.appendChild(heart);
     }
   }
+
+  /* =========================================================
+     INITIALIZE - Show page 1
+     ========================================================= */
+  // Make sure page 1 is active
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page1').classList.add('active');
+    
+    // Start ribbons after a moment
+    setTimeout(startRibbons, 2000);
+  });
 </script>
 </body>
 </html>
