@@ -11,9 +11,8 @@
   <!-- ===== STYLESHEET ===== -->
   <link rel="stylesheet" href="Style.css" />
 
-  <!-- small inline fix for start screen overlay (will be hidden by JS) -->
   <style>
-    /* start screen is defined in style.css, but we keep a tiny extra */
+    /* start screen sub-text */
     #startScreen .sub {
       font-size: 1rem;
       opacity: 0.6;
@@ -22,6 +21,84 @@
       margin-top: 12px;
       letter-spacing: 3px;
       font-weight: 200;
+    }
+
+    /* forgive page specific */
+    .forgive-buttons {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .forgive-buttons button {
+      min-width: 120px;
+      padding: 14px 36px;
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 2px;
+      border-radius: 60px;
+      border: 1px solid rgba(200, 215, 230, 0.25);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e0eaf3;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .forgive-buttons button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: scale(1.04);
+      border-color: rgba(200, 215, 230, 0.5);
+      box-shadow: 0 0 30px rgba(160, 185, 210, 0.15);
+    }
+
+    .forgive-buttons .btn-yes {
+      border-color: rgba(130, 210, 160, 0.35);
+    }
+
+    .forgive-buttons .btn-yes:hover {
+      border-color: rgba(130, 210, 160, 0.7);
+      box-shadow: 0 0 40px rgba(130, 210, 160, 0.15);
+    }
+
+    .forgive-buttons .btn-no {
+      border-color: rgba(210, 150, 150, 0.3);
+    }
+
+    .forgive-buttons .btn-no:hover {
+      border-color: rgba(210, 150, 150, 0.6);
+      box-shadow: 0 0 40px rgba(210, 150, 150, 0.12);
+    }
+
+    .sure-message {
+      margin-top: 18px;
+      font-size: 1.1rem;
+      color: #d4dce6;
+      opacity: 0.8;
+      letter-spacing: 1px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .celebratory-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 10px;
+      animation: pulseHeart 2s infinite alternate;
+    }
+
+    .goodbye-message {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8rem;
+      color: #d4dce6;
+      text-shadow: 0 0 30px rgba(160, 180, 200, 0.2);
+      margin-top: 10px;
     }
   </style>
 </head>
