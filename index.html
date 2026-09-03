@@ -158,6 +158,7 @@
       overflow: hidden;
       border: 1px solid rgba(255, 170, 185, .25);
       box-shadow: 0 20px 70px rgba(0,0,0,.4);
+      cursor: pointer;
     }
 
     .secret-message {
@@ -168,6 +169,14 @@
       padding: 30px;
       text-align: center;
       background: radial-gradient(circle, #350d19, #16050a);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+    }
+
+    .secret-message.revealed {
+      opacity: 1;
     }
 
     .secret-message div {
@@ -195,12 +204,27 @@
       height: 100%;
       cursor: crosshair;
       touch-action: none;
+      z-index: 2;
     }
 
     .scratch-label {
       margin-top: -25px;
       color: #6f555c;
       font-size: 17px;
+    }
+
+    .scratch-hint {
+      margin-top: 12px;
+      color: #8a6a72;
+      font-size: 14px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      animation: fadeHint 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeHint {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
     }
 
     .divider {
@@ -386,7 +410,7 @@
   <div class="content scratch-content">
     <div class="section-label">Sealed</div>
     <div class="scratch-card" id="scratchCard">
-      <div class="secret-message">
+      <div class="secret-message" id="secretMessage">
         <div>
           <strong>I'm sorry, Baby.</strong>
           <p>I know I messed up, and I don't want to hide behind jokes or excuses. I just want you to know that I am genuinely sorry.</p>
@@ -394,9 +418,10 @@
       </div>
       <canvas id="scratchCanvas"></canvas>
     </div>
-    <div class="scratch-label">It was hidden on purpose.</div>
+    <div class="scratch-label">Scratch the surface to reveal</div>
+    <div class="scratch-hint" id="scratchHint">✧ drag your finger to scratch ✧</div>
     <div class="divider"></div>
-    <button class="primary-btn" onclick="showPage(3)">Continue</button>
+    <button class="primary-btn" id="continueBtn" onclick="showPage(3)" style="opacity:0.5;pointer-events:none;transition:opacity 0.5s;">Continue</button>
   </div>
 </section>
 
@@ -451,15 +476,19 @@
   }
 
   /* =========================================================
-     SCRATCH CARD
+     SCRATCH CARD - Enhanced with smooth reveal
      ========================================================= */
   function setupScratchCard() {
     const canvas = document.getElementById("scratchCanvas");
     const card = document.getElementById("scratchCard");
+    const secretMessage = document.getElementById("secretMessage");
+    const continueBtn = document.getElementById("continueBtn");
+    const scratchHint = document.getElementById("scratchHint");
     const ctx = canvas.getContext("2d");
     let isScratching = false;
     let scratchCount = 0;
-    let completed = false;
+    let totalScratchNeeded = 120;
+    let isRevealed = false;
 
     function resize() {
       const rect = card.getBoundingClientRect();
@@ -470,60 +499,133 @@
       canvas.style.height = rect.height + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       
-      // Cover layer
+      // Cover layer with gradient
       const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
       gradient.addColorStop(0, "#8f243c");
-      gradient.addColorStop(.5, "#68202f");
-      gradient.addColorStop(1, "#42141f");
+      gradient.addColorStop(.4, "#6a1f30");
+      gradient.addColorStop(.7, "#4a1623");
+      gradient.addColorStop(1, "#2d0d15");
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, rect.width, rect.height);
       
-      // Texture
-      ctx.globalAlpha = .12;
+      // Decorative texture - diagonal lines
+      ctx.globalAlpha = .15;
       ctx.strokeStyle = "#ffd1da";
-      ctx.lineWidth = 1;
-      for (let x = -rect.height; x < rect.width; x += 18) {
+      ctx.lineWidth = 1.5;
+      for (let x = -rect.height; x < rect.width; x += 20) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x + rect.height, rect.height);
         ctx.stroke();
       }
+      
+      // Subtle sparkle dots
+      ctx.globalAlpha = .08;
+      ctx.fillStyle = "#ffffff";
+      for (let i = 0; i < 30; i++) {
+        const sx = Math.random() * rect.width;
+        const sy = Math.random() * rect.height;
+        const size = 1 + Math.random() * 2;
+        ctx.beginPath();
+        ctx.arc(sx, sy, size, 0, Math.PI * 2);
+        ctx.fill();
+      }
       ctx.globalAlpha = 1;
+      
+      // If already revealed, clear canvas
+      if (isRevealed) {
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalCompositeOperation = "source-over";
+      }
     }
 
     function scratch(event) {
-      if (!isScratching || completed) return;
+      if (!isScratching || isRevealed) return;
+      
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       
+      // Use destination-out to erase the cover
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
-      ctx.arc(x, y, 32, 0, Math.PI * 2);
+      ctx.arc(x, y, 30, 0, Math.PI * 2);
       ctx.fill();
       
       scratchCount++;
-      if (scratchCount > 80) {
-        completed = true;
-        ctx.globalCompositeOperation = "destination-out";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Update progress
+      const progress = Math.min(scratchCount / totalScratchNeeded, 1);
+      
+      // Show hint text fading
+      if (scratchHint) {
+        scratchHint.style.opacity = Math.max(0, 1 - progress * 2);
+      }
+      
+      // Check if enough scratched
+      if (scratchCount > totalScratchNeeded) {
+        revealMessage();
       }
     }
 
+    function revealMessage() {
+      if (isRevealed) return;
+      isRevealed = true;
+      
+      // Clear remaining cover
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "source-over";
+      
+      // Fade in the secret message
+      secretMessage.classList.add("revealed");
+      
+      // Enable continue button
+      continueBtn.style.opacity = "1";
+      continueBtn.style.pointerEvents = "auto";
+      
+      // Hide hint
+      if (scratchHint) {
+        scratchHint.style.opacity = "0";
+      }
+    }
+
+    // Mouse/Touch events
     canvas.addEventListener("pointerdown", (event) => {
       isScratching = true;
       canvas.setPointerCapture(event.pointerId);
       scratch(event);
     });
 
-    canvas.addEventListener("pointermove", scratch);
-    canvas.addEventListener("pointerup", () => { isScratching = false; });
-    canvas.addEventListener("pointercancel", () => { isScratching = false; });
-    
+    canvas.addEventListener("pointermove", (event) => {
+      if (isScratching) {
+        scratch(event);
+      }
+    });
+
+    canvas.addEventListener("pointerup", () => {
+      isScratching = false;
+    });
+
+    canvas.addEventListener("pointercancel", () => {
+      isScratching = false;
+    });
+
+    // Also allow clicking to scratch
+    canvas.addEventListener("click", (event) => {
+      if (!isRevealed) {
+        scratch(event);
+      }
+    });
+
+    // Handle resize
     window.addEventListener("resize", resize);
     resize();
   }
+
+  // Initialize scratch card
   setupScratchCard();
 
   /* =========================================================
