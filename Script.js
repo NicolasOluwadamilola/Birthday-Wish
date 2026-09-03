@@ -83,7 +83,7 @@ const pages = [
     name: 'Omo 💔',
     heading: 'Until i die??',
     message: `You get pride gan o 🤧😡`,
-    song: 'goodbye.mp3',
+    song: 'Annoyed.mp3',
     bg: 'linear-gradient(145deg, #2a2a3a, #3a3a4a)',
     isGoodbye: true
   }
