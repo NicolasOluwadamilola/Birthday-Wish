@@ -376,6 +376,36 @@
       text-transform: uppercase;
     }
 
+    /* Music control button */
+    .music-control {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 100;
+      background: rgba(255, 85, 115, 0.2);
+      border: 1px solid rgba(255, 85, 115, 0.3);
+      color: #ff9aae;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-control:hover {
+      background: rgba(255, 85, 115, 0.4);
+      transform: scale(1.1);
+    }
+
+    .music-control.muted {
+      opacity: 0.5;
+    }
+
     @media (max-width: 600px) {
       .content { padding: 55px 0; }
       h1 { margin-top: 45px; }
@@ -384,6 +414,13 @@
       .message-content { padding-top: 65px; }
       .choices { gap: 12px; }
       .choice { min-width: 135px; padding: 17px 20px; }
+      .music-control {
+        bottom: 15px;
+        right: 15px;
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+      }
     }
 
     @media (max-height: 700px) {
@@ -393,6 +430,9 @@
   </style>
 </head>
 <body>
+
+<!-- Music Control Button -->
+<button class="music-control" id="musicControl" aria-label="Toggle music">🔊</button>
 
 <!-- PAGE 1 -->
 <section class="page active" id="page1">
@@ -461,6 +501,179 @@
 
 <script>
   /* =========================================================
+     BACKGROUND MUSIC
+     ========================================================= */
+  (function() {
+    let audioContext = null;
+    let audioBuffer = null;
+    let audioSource = null;
+    let isPlaying = false;
+    let isMuted = false;
+    let musicStarted = false;
+
+    // Create a simple melody using Web Audio API
+    function createMusic() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Create a buffer with a simple melody
+      const sampleRate = audioContext.sampleRate;
+      const duration = 8; // 8 seconds loop
+      const bufferLength = sampleRate * duration;
+      audioBuffer = audioContext.createBuffer(2, bufferLength, sampleRate);
+      
+      const leftChannel = audioBuffer.getChannelData(0);
+      const rightChannel = audioBuffer.getChannelData(1);
+      
+      // Simple romantic melody - notes with gentle arpeggio
+      const notes = [
+        { freq: 523.25, duration: 0.5 }, // C5
+        { freq: 587.33, duration: 0.5 }, // D5
+        { freq: 659.25, duration: 0.5 }, // E5
+        { freq: 783.99, duration: 0.5 }, // G5
+        { freq: 659.25, duration: 0.5 }, // E5
+        { freq: 587.33, duration: 0.5 }, // D5
+        { freq: 523.25, duration: 0.5 }, // C5
+        { freq: 493.88, duration: 0.5 }, // B4
+        { freq: 523.25, duration: 0.5 }, // C5
+        { freq: 587.33, duration: 0.5 }, // D5
+        { freq: 659.25, duration: 0.5 }, // E5
+        { freq: 783.99, duration: 0.5 }, // G5
+        { freq: 880.00, duration: 0.5 }, // A5
+        { freq: 783.99, duration: 0.5 }, // G5
+        { freq: 659.25, duration: 0.5 }, // E5
+        { freq: 587.33, duration: 1.0 }, // D5 (hold)
+      ];
+      
+      let time = 0;
+      const volume = 0.15;
+      
+      // Generate the melody with gentle piano-like envelope
+      for (let i = 0; i < notes.length; i++) {
+        const note = notes[i];
+        const freq = note.freq;
+        const dur = note.duration * sampleRate;
+        const startSample = Math.floor(time * sampleRate);
+        const endSample = Math.min(startSample + Math.floor(dur), bufferLength);
+        
+        // Add decay envelope
+        for (let j = startSample; j < endSample; j++) {
+          const progress = (j - startSample) / dur;
+          const envelope = Math.sin(progress * Math.PI) * (1 - progress * 0.5);
+          const value = Math.sin(2 * Math.PI * freq * j / sampleRate) * envelope * volume;
+          
+          // Add gentle vibrato
+          const vibrato = 1 + 0.005 * Math.sin(2 * Math.PI * 5 * j / sampleRate);
+          const vibratoValue = Math.sin(2 * Math.PI * freq * vibrato * j / sampleRate) * envelope * volume * 0.7;
+          
+          leftChannel[j] += value + vibratoValue * 0.3;
+          rightChannel[j] += value + vibratoValue * 0.3;
+        }
+        time += note.duration;
+      }
+      
+      // Add some soft ambient pad
+      for (let i = 0; i < bufferLength; i++) {
+        const progress = i / bufferLength;
+        const ambient = Math.sin(2 * Math.PI * 110 * i / sampleRate) * 0.03 * (1 - progress);
+        leftChannel[i] += ambient;
+        rightChannel[i] += ambient;
+      }
+      
+      return true;
+    }
+
+    function startMusic() {
+      if (musicStarted) return;
+      if (!audioContext) {
+        createMusic();
+      }
+      
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+      
+      if (audioBuffer && !isPlaying) {
+        audioSource = audioContext.createBufferSource();
+        audioSource.buffer = audioBuffer;
+        audioSource.loop = true;
+        audioSource.connect(audioContext.destination);
+        audioSource.start(0);
+        isPlaying = true;
+        musicStarted = true;
+        updateMusicButton();
+      }
+    }
+
+    function toggleMusic() {
+      if (!musicStarted) {
+        startMusic();
+        return;
+      }
+      
+      isMuted = !isMuted;
+      
+      if (isMuted) {
+        if (audioSource) {
+          audioSource.disconnect();
+          audioSource = null;
+        }
+        isPlaying = false;
+      } else {
+        if (!isPlaying && audioBuffer) {
+          audioSource = audioContext.createBufferSource();
+          audioSource.buffer = audioBuffer;
+          audioSource.loop = true;
+          audioSource.connect(audioContext.destination);
+          audioSource.start(0);
+          isPlaying = true;
+        }
+      }
+      updateMusicButton();
+    }
+
+    function updateMusicButton() {
+      const btn = document.getElementById('musicControl');
+      if (isMuted || !musicStarted) {
+        btn.textContent = '🔇';
+        btn.classList.add('muted');
+      } else {
+        btn.textContent = '🔊';
+        btn.classList.remove('muted');
+      }
+    }
+
+    // Click handler to start music
+    function handleFirstClick() {
+      if (!musicStarted) {
+        startMusic();
+      }
+      // Remove listener after first click
+      document.removeEventListener('click', handleFirstClick);
+      document.removeEventListener('touchstart', handleFirstClick);
+    }
+
+    // Listen for clicks to start music
+    document.addEventListener('click', handleFirstClick);
+    document.addEventListener('touchstart', handleFirstClick);
+
+    // Music control button
+    document.getElementById('musicControl').addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleMusic();
+    });
+
+    // Pre-create audio context on any interaction
+    document.addEventListener('pointerdown', function() {
+      if (!audioContext) {
+        createMusic();
+      }
+    }, { once: true });
+
+    // Expose start function for other interactions
+    window.startBackgroundMusic = startMusic;
+  })();
+
+  /* =========================================================
      PAGE NAVIGATION
      ========================================================= */
   let currentPage = 1;
@@ -473,10 +686,14 @@
       currentPage = number;
       window.scrollTo(0, 0);
     }
+    // Start music on page navigation if not already started
+    if (typeof window.startBackgroundMusic === 'function') {
+      window.startBackgroundMusic();
+    }
   }
 
   /* =========================================================
-     SCRATCH CARD - Enhanced with smooth reveal
+     SCRATCH CARD
      ========================================================= */
   function setupScratchCard() {
     const canvas = document.getElementById("scratchCanvas");
@@ -499,7 +716,6 @@
       canvas.style.height = rect.height + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       
-      // Cover layer with gradient
       const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
       gradient.addColorStop(0, "#8f243c");
       gradient.addColorStop(.4, "#6a1f30");
@@ -509,7 +725,6 @@
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, rect.width, rect.height);
       
-      // Decorative texture - diagonal lines
       ctx.globalAlpha = .15;
       ctx.strokeStyle = "#ffd1da";
       ctx.lineWidth = 1.5;
@@ -520,7 +735,6 @@
         ctx.stroke();
       }
       
-      // Subtle sparkle dots
       ctx.globalAlpha = .08;
       ctx.fillStyle = "#ffffff";
       for (let i = 0; i < 30; i++) {
@@ -533,7 +747,6 @@
       }
       ctx.globalAlpha = 1;
       
-      // If already revealed, clear canvas
       if (isRevealed) {
         ctx.globalCompositeOperation = "destination-out";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -548,7 +761,6 @@
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       
-      // Use destination-out to erase the cover
       ctx.globalCompositeOperation = "destination-out";
       ctx.beginPath();
       ctx.arc(x, y, 30, 0, Math.PI * 2);
@@ -556,15 +768,12 @@
       
       scratchCount++;
       
-      // Update progress
       const progress = Math.min(scratchCount / totalScratchNeeded, 1);
       
-      // Show hint text fading
       if (scratchHint) {
         scratchHint.style.opacity = Math.max(0, 1 - progress * 2);
       }
       
-      // Check if enough scratched
       if (scratchCount > totalScratchNeeded) {
         revealMessage();
       }
@@ -574,25 +783,20 @@
       if (isRevealed) return;
       isRevealed = true;
       
-      // Clear remaining cover
       ctx.globalCompositeOperation = "destination-out";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "source-over";
       
-      // Fade in the secret message
       secretMessage.classList.add("revealed");
       
-      // Enable continue button
       continueBtn.style.opacity = "1";
       continueBtn.style.pointerEvents = "auto";
       
-      // Hide hint
       if (scratchHint) {
         scratchHint.style.opacity = "0";
       }
     }
 
-    // Mouse/Touch events
     canvas.addEventListener("pointerdown", (event) => {
       isScratching = true;
       canvas.setPointerCapture(event.pointerId);
@@ -613,19 +817,16 @@
       isScratching = false;
     });
 
-    // Also allow clicking to scratch
     canvas.addEventListener("click", (event) => {
       if (!isRevealed) {
         scratch(event);
       }
     });
 
-    // Handle resize
     window.addEventListener("resize", resize);
     resize();
   }
 
-  // Initialize scratch card
   setupScratchCard();
 
   /* =========================================================
