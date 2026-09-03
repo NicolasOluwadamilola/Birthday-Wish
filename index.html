@@ -1,46 +1,51 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>I'm Sorry 💔</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts: refined elegance -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet" />
+
+  <!-- ===== STYLESHEET ===== -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- small inline fix for start screen overlay (will be hidden by JS) -->
+  <style>
+    /* start screen is defined in style.css, but we keep a tiny extra */
+    #startScreen .sub {
+      font-size: 1rem;
+      opacity: 0.6;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 18px;
+      margin-top: 12px;
+      letter-spacing: 3px;
+      font-weight: 200;
+    }
+  </style>
 </head>
-
 <body>
-  <div id="startScreen" style="
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  font-size:2em;
-  cursor:pointer;
-  z-index:1000;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-  flex-direction: column;
-  line-height: 1.5;
-">
-  <span style="font-family: 'Great Vibes', cursive; font-size: 3rem;">💔</span>
-  <span>Tap anywhere to begin</span>
-</div>
-  <!-- 🎀 Ribbons (now representing falling tears) -->
-  <div class="ribbons"></div>
 
-  <!-- 🌸 Music Player (hidden controls) -->
-  <audio id="bgMusic" loop autoplay></audio>
-
-  <!-- SPA Container -->
-  <div class="page-container">
-    <!-- Page content will be injected here -->
+  <!-- ===== START SCREEN ===== -->
+  <div id="startScreen">
+    <span>💔</span>
+    <div style="font-family: 'Great Vibes', cursive; font-size: 2.6rem; line-height: 1.2; margin-bottom: 6px;">a whisper of regret</div>
+    <div class="sub">tap anywhere to begin</div>
   </div>
 
-  <script src="Script.js"></script>
+  <!-- ===== TEARS (falling) ===== -->
+  <div class="tears-container" id="tearsContainer"></div>
+
+  <!-- ===== MUSIC (autoplay hidden) ===== -->
+  <audio id="bgMusic" loop></audio>
+
+  <!-- ===== SPA CONTAINER ===== -->
+  <div class="page-container" id="pageContainer">
+    <!-- dynamic content injected by JS -->
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script src="script.js"></script>
 </body>
 </html>
