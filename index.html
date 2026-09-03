@@ -176,37 +176,39 @@
       margin: 38px auto 0;
       touch-action: none;
       user-select: none;
+      cursor: pointer;
     }
 
     .dot {
       position: absolute;
-      width: 30px;
-      height: 30px;
-      margin: -15px 0 0 -15px;
+      width: 34px;
+      height: 34px;
+      margin: -17px 0 0 -17px;
       border-radius: 50%;
       background: #75535b;
       box-shadow: 0 0 0 0 rgba(255, 90, 120, 0);
-      transition: background .25s, transform .25s, box-shadow .25s;
+      transition: background .3s, transform .3s, box-shadow .3s;
       z-index: 3;
       pointer-events: none;
     }
 
     .dot.glowing {
       background: #ff6681;
-      box-shadow: 0 0 35px 15px rgba(255, 70, 110, .6);
-      transform: scale(1.3);
+      box-shadow: 0 0 40px 20px rgba(255, 70, 110, .7);
+      transform: scale(1.4);
       animation: pulse 1s ease-in-out infinite;
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1.3); }
-      50% { transform: scale(1.5); }
+      0%, 100% { transform: scale(1.4); }
+      50% { transform: scale(1.6); }
     }
 
     .dot.connected {
       background: #ffb0be;
       box-shadow: 0 0 25px 8px rgba(255, 100, 130, .4);
       transform: scale(1);
+      animation: none;
     }
 
     .game-instruction {
@@ -587,9 +589,9 @@
 
   /* =========================================================
      FLUID DOT-CONNECTION GAME
-     - Drag continuously from dot to dot
-     - Line follows your finger
-     - Next dot automatically glows
+     - First dot glows automatically
+     - Click on glowing dot → glow moves to next dot instantly
+     - Drag to draw lines between dots
      ========================================================= */
   const games = [
     { id: "game1", points: [[16,38],[61,35],[85,60],[39,69],[68,84]] },
@@ -627,6 +629,7 @@
     let pointerPos = null;
     let drawnSegments = [];
     let completed = false;
+    let glowMoved = false;
 
     function resizeCanvas() {
       const rect = area.getBoundingClientRect();
@@ -693,12 +696,53 @@
 
     function isOverDot(x, y, index) {
       const p = getPoint(index);
-      return Math.hypot(x - p.x, y - p.y) < 40;
+      return Math.hypot(x - p.x, y - p.y) < 45;
     }
 
-    // Pointer down: start dragging if on current dot
+    // Click on glowing dot: move glow to next dot instantly
+    area.addEventListener("click", (event) => {
+      if (completed || current >= config.points.length - 1) return;
+      if (glowMoved) return; // Only allow click to move glow once per dot
+      
+      const pos = getPointerPos(event);
+      if (!isOverDot(pos.x, pos.y, current)) return;
+      
+      // Move glow to next dot
+      const nextIndex = current + 1;
+      dots[current].classList.remove("glowing");
+      dots[current].classList.add("connected");
+      
+      // Draw the line immediately
+      drawnSegments.push([current, nextIndex]);
+      
+      current = nextIndex;
+      glowMoved = true;
+      
+      if (current < dots.length - 1) {
+        dots[current].classList.add("glowing");
+      } else {
+        // Last dot - complete!
+        dots[current].classList.add("glowing");
+        // Complete immediately when last dot glows
+        setTimeout(() => {
+          dots[current].classList.remove("glowing");
+          dots[current].classList.add("connected");
+          completed = true;
+          redraw();
+          setTimeout(() => { showPage(nextPage); }, 700);
+        }, 500);
+        redraw();
+        return;
+      }
+      
+      redraw();
+    });
+
+    // Pointer down: start dragging from current dot
     area.addEventListener("pointerdown", (event) => {
       if (completed || current >= config.points.length - 1) return;
+      if (!glowMoved) return; // Must click first to move glow
+      
       const pos = getPointerPos(event);
       if (!isOverDot(pos.x, pos.y, current)) return;
       
@@ -722,11 +766,11 @@
         dots[current].classList.remove("glowing");
         dots[current].classList.add("connected");
         current = nextIndex;
+        glowMoved = false; // Reset so click can move glow again
 
         if (current < dots.length - 1) {
-          // Automatically glow the next dot
+          // Glow the next dot
           dots[current].classList.add("glowing");
-          // Reset pointer position to the new dot for smooth continuation
           pointerPos = getPoint(current);
         } else {
           // Last dot connected - complete!
