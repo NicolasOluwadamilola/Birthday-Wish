@@ -1,1 +1,119 @@
 
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  color: #f0f0f0; /* Softer white */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #2c3e50, #4a6274); /* A melancholic, muted blue-grey */
+  position: relative;
+}
+
+/* SPA Page Container */
+.page-container {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  max-width: 700px; /* Better readability */
+  margin: 0 auto;
+}
+
+/* Name style - more intimate */
+.name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.8em;
+  text-shadow: 0 0 20px #a4b0be;
+  animation: glowPulse 3s infinite alternate;
+  color: #dfe6e9;
+}
+
+@keyframes glowPulse {
+  from { text-shadow: 0 0 10px #a4b0be, 0 0 20px #747d8c; }
+  to { text-shadow: 0 0 20px #dfe6e9, 0 0 40px #a4b0be; }
+}
+
+/* Glowing heading - more of a gentle shimmer */
+.glow {
+  color: #f1f2f6;
+  text-shadow: 0 0 5px #747d8c, 0 0 10px #a4b0be;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* Handwriting effect */
+.handwriting {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.1em;
+  line-height: 1.6;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  display: inline-block;
+  white-space: normal;
+  word-wrap: break-word;
+  animation: typing 4s steps(60, end) forwards, blink 0.8s infinite;
+  margin-top: 20px;
+  text-align: center;
+  color: #dfe6e9; /* Light grey for text */
+  background: rgba(0,0,0,0.2); /* A subtle background to make text pop */
+  padding: 15px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(2px);
+}
+@keyframes typing { from { width:0 } to { width:100% } }
+@keyframes blink { 50% { border-color: transparent } }
+
+/* Buttons - more subtle */
+button {
+  margin-top: 40px;
+  padding: 12px 28px;
+  font-size: 18px;
+  border-radius: 40px;
+  border: 1px solid #a4b0be;
+  background: transparent;
+  color: #dfe6e9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(164, 176, 190, 0.2);
+}
+
+/* Ribbons styled as tears */
+.ribbons {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+.ribbon {
+  position: absolute;
+  width: 2px; /* Thinner like a tear drop */
+  height: 30px;
+  opacity: 0.6;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Tear-drop shape */
+  animation: fall linear infinite;
+  background: #a4b0be; /* Base color for tears */
+  box-shadow: 0 0 8px #747d8c;
+}
+/* Different shades of blue/grey for tears */
+.ribbon:nth-child(3n){background:#74b9ff; box-shadow: 0 0 10px #0984e3;}
+.ribbon:nth-child(3n+1){background:#dfe6e9; box-shadow: 0 0 10px #b2bec3;}
+.ribbon:nth-child(3n+2){background:#81ecec; box-shadow: 0 0 10px #00cec9;}
+
+@keyframes fall {
+  0% { transform: translateY(-50px) translateX(0) rotate(0deg) scale(0.8); opacity: 0.2; }
+  50% { transform: translateY(50vh) translateX(20px) rotate(10deg) scale(1); opacity: 0.8; }
+  100% { transform: translateY(110vh) translateX(-10px) rotate(-5deg) scale(0.6); opacity: 0.1; }
+}
