@@ -61,7 +61,7 @@ const pages = [
   },
   // ----- CELEBRATORY PAGE (id: 5) -----
   {
-    id:4,
+    id:5,
     name: 'You Said Yes! 🎉',
     heading: 'Thank You',
     message: `You have no idea how much this means to me.\nI promise I'll do my best to make it up to you.\nI love you. ❤️`,
