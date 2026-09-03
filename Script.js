@@ -1,154 +1,91 @@
-/* =========================================================
-   MUSIC PLAYER (from original)
-   ========================================================= */
+// 🎀 Tears (was Ribbons) - Creates falling tear elements
+function createTear() {
+  const tear = document.createElement("div");
+  tear.classList.add("ribbon"); // Keep class name for CSS
+  tear.style.left = Math.random() * window.innerWidth + "px";
+  tear.style.animationDuration = (4 + Math.random() * 6) + "s"; // Slightly slower fall
+  tear.style.opacity = 0.3 + Math.random() * 0.5;
+  tear.style.height = (20 + Math.random() * 30) + "px"; // Varying tear sizes
+  document.querySelector(".ribbons").appendChild(tear);
+  setTimeout(() => tear.remove(), 10000); // Longer lifecycle
+}
+setInterval(createTear, 300); // Create a new tear every 300ms
 
-const music = document.getElementById("bgMusic");
-const startScreen = document.getElementById("startScreen");
-
-// List of songs for each page (customize these)
-const songs = [
-    "apology-song-1.mp3",  // Page 1
-    "apology-song-2.mp3",  // Page 2
-    "apology-song-3.mp3",  // Page 3
-    "apology-song-4.mp3",  // Page 4
-    "apology-song-5.mp3",  // Page 5
-    "apology-final.mp3"    // Page 6
+// 🌟 SPA Pages Data - Apology Theme
+const pages = [
+  {
+    id: 1,
+    name: "My Dearest 💔",
+    heading: "I'm So Sorry",
+    message: "I've been doing a lot of thinking, and I realize I made a mistake. \nI let my pride get in the way, and I hurt you. \nI know saying 'sorry' might not fix everything, but I need you to know that my regret is real.\nPlease know that you mean more to me than my ego ever did.\nI miss you. I miss us.",
+    song: "sad-piano-apology.mp3", // Replace with your audio file
+    bg: "linear-gradient(135deg, #2c3e50, #4a6274)"
+  },
+  {
+    id: 2,
+    name: "To You 🌹",
+    heading: "I Was Wrong",
+    message: "I've had time to reflect, and I see things differently now.\nI was selfish, and I didn't appreciate you the way I should have.\nYou deserved better from me. I'm not making excuses, just trying to be honest.\nI hope you can find it in your heart to forgive me.",
+    song: "reflective-guitar.mp3", // Replace with your audio file
+    bg: "linear-gradient(135deg, #4a6274, #6a8a9e)"
+  },
+  {
+    id: 3,
+    name: "For You 💖",
+    heading: "I Miss Your Smile",
+    message: "The silence feels so loud without you.\nI miss your laugh, your voice, the way you make everything seem brighter.\nThe thought of losing you is the worst pain I've known.\nI'm here, ready to listen, ready to change, ready to do better.\nI just need a chance.",
+    song: "gentle-strings.mp3", // Replace with your audio file
+    bg: "linear-gradient(135deg, #6a8a9e, #8aacb9)"
+  },
+  {
+    id: 4,
+    name: "Always & Forever ❤️",
+    heading: "Can We Try Again?",
+    message: "I know things won't be the same overnight, and I'm not asking for that.\nAll I'm asking for is a chance to earn back your trust.\nI want to show you that you are my priority.\nI want to be the person you deserve.\nI'm sorry for everything, and I promise to do better.\nWith all my love.",
+    song: "hopeful-piano.mp3", // Replace with your audio file
+    bg: "linear-gradient(135deg, #8aacb9, #aac8d8)"
+  }
 ];
 
-// Start music when user taps the screen
+// 🌟 SPA Logic
+let currentPage = 0;
+const container = document.querySelector(".page-container");
+const music = document.getElementById("bgMusic");
+
+function loadPage(index) {
+  const page = pages[index];
+  container.innerHTML = `
+    <h1 class="name">${page.name}</h1>
+    <h2 class="glow">${page.heading}</h2>
+    <p class="handwriting">${page.message}</p>
+    ${index < pages.length - 1 ? '<button id="nextBtn">Read On ❤️</button>' : '<button id="restartBtn" style="margin-top: 30px;">Start Over 💫</button>'}
+  `;
+  document.body.style.background = page.bg;
+
+  // Smooth music transition
+  music.src = page.song;
+  music.play().catch(() => {});
+
+  if(index < pages.length - 1){
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      currentPage++;
+      loadPage(currentPage);
+    });
+  } else {
+    // Add listener for restart button
+    document.getElementById("restartBtn").addEventListener("click", () => {
+      currentPage = 0;
+      loadPage(currentPage);
+    });
+  }
+}
+
+// Initialize first page
+loadPage(currentPage);
+
+const startScreen = document.getElementById("startScreen");
+
 startScreen.addEventListener("click", () => {
-    music.play().catch(() => {});
-    startScreen.style.display = "none";
+  music.play().catch(()=>{});
+  startScreen.style.display = "none";
 });
-
-// Change music when page changes
-function changeMusic(pageNumber) {
-    if (pageNumber >= 1 && pageNumber <= songs.length) {
-        music.src = songs[pageNumber - 1];
-        music.load();
-        music.play().catch(() => {});
-    }
-}
-
-/* =========================================================
-   PAGE NAVIGATION
-   ========================================================= */
-
-let currentPage = 1;
-
-function showPage(number) {
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
-    const target = document.getElementById("page" + number);
-    if (target) {
-        target.classList.add("active");
-        currentPage = number;
-        window.scrollTo(0, 0);
-        changeMusic(number);
-    }
-}
-
-/* =========================================================
-   ANSWER LOGIC
-   ========================================================= */
-
-let answerChosen = false;
-
-function yesAnswer() {
-    if (answerChosen) return;
-
-    answerChosen = true;
-    showPage(6);
-    createHearts();
-
-    // Update WhatsApp link with personalized message
-    const btn = document.querySelector(".whatsapp-btn");
-    if (btn) {
-        btn.href = "https://wa.me/2348012345678?text=I%20said%20yes.%20I'm%20ready%20to%20talk.%20❤️";
-    }
-}
-
-function noAnswer() {
-    if (answerChosen) return;
-
-    const button = document.querySelector(".choice:not(.yes)");
-    const messages = [
-        "Are you sure? 😅",
-        "Really? 🥺",
-        "Please reconsider? 💕",
-        "I'll make it up to you! 🙏"
-    ];
-
-    let index = 0;
-    const interval = setInterval(() => {
-        button.textContent = messages[index];
-        button.style.transform = "scale(1.05)";
-        index++;
-
-        if (index >= messages.length) {
-            clearInterval(interval);
-            setTimeout(() => {
-                button.textContent = "No";
-                button.style.transform = "";
-            }, 800);
-        }
-    }, 600);
-}
-
-/* =========================================================
-   FLOATING HEARTS
-   ========================================================= */
-
-function createHearts() {
-    const container = document.getElementById("hearts");
-
-    if (container.children.length > 0) return;
-
-    const symbols = ["♥", "❤", "💕", "💖", "💗"];
-    for (let i = 0; i < 25; i++) {
-        const heart = document.createElement("div");
-
-        heart.className = "heart";
-        heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        heart.style.left = Math.random() * 100 + "%";
-        heart.style.animationDelay = (Math.random() * 8) + "s";
-        heart.style.animationDuration = (6 + Math.random() * 8) + "s";
-        heart.style.fontSize = (20 + Math.random() * 30) + "px";
-        heart.style.opacity = 0.3 + Math.random() * 0.4;
-
-        container.appendChild(heart);
-    }
-}
-
-/* =========================================================
-   AUTO-PLAY ON PAGE LOAD (optional)
-   ========================================================= */
-
-// Uncomment to auto-play music when page loads (may not work on mobile)
-/*
-document.addEventListener('DOMContentLoaded', () => {
-    music.play().catch(() => {});
-});
-*/
-
-/* =========================================================
-   PREVENT DOUBLE NAVIGATION
-   ========================================================= */
-
-let isNavigating = false;
-
-document.querySelectorAll('.primary-btn, .choice').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Debounce navigation
-        if (isNavigating) return;
-        isNavigating = true;
-        setTimeout(() => {
-            isNavigating = false;
-        }, 500);
-    });
-});
-
-console.log('💔 Apology website loaded with music');
-console.log('🎵 Music will play after tapping the start screen');
