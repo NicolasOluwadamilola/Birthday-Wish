@@ -431,6 +431,36 @@
 </head>
 <body>
 
+<!-- ============================================================
+     🎵 MUSIC CONFIGURATION - EDIT YOUR SONGS HERE
+     ============================================================ -->
+<script>
+  // ============================================================
+  //  SONG LINKS - Replace these with your own audio file URLs
+  // ============================================================
+  
+  const SONG_CONFIG = {
+    // First song - plays on pages 1, 2, and 3
+    song1: {
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+      // Alternative: Use a direct audio file link
+      // url: "https://example.com/your-romantic-song.mp3",
+      pages: [1, 2, 3]
+    },
+    // Second song - plays on pages 4 and beyond
+    song2: {
+      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+      // Alternative: Use a direct audio file link
+      // url: "https://example.com/your-celebratory-song.mp3",
+      pages: [4]
+    }
+  };
+  
+  // ============================================================
+  //  END OF MUSIC CONFIGURATION
+  // ============================================================
+</script>
+
 <!-- Music Control Button -->
 <button class="music-control" id="musicControl" aria-label="Toggle music">🔊</button>
 
@@ -501,104 +531,82 @@
 
 <script>
   /* =========================================================
-     BACKGROUND MUSIC
+     BACKGROUND MUSIC - Using external audio files
      ========================================================= */
   (function() {
-    let audioContext = null;
-    let audioBuffer = null;
-    let audioSource = null;
-    let isPlaying = false;
+    let audioElement = null;
+    let currentSong = null;
     let isMuted = false;
     let musicStarted = false;
+    let currentPageNumber = 1;
 
-    // Create a simple melody using Web Audio API
-    function createMusic() {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    // Get the song URL for a given page
+    function getSongForPage(pageNum) {
+      const config = window.SONG_CONFIG || {};
       
-      // Create a buffer with a simple melody
-      const sampleRate = audioContext.sampleRate;
-      const duration = 8; // 8 seconds loop
-      const bufferLength = sampleRate * duration;
-      audioBuffer = audioContext.createBuffer(2, bufferLength, sampleRate);
-      
-      const leftChannel = audioBuffer.getChannelData(0);
-      const rightChannel = audioBuffer.getChannelData(1);
-      
-      // Simple romantic melody - notes with gentle arpeggio
-      const notes = [
-        { freq: 523.25, duration: 0.5 }, // C5
-        { freq: 587.33, duration: 0.5 }, // D5
-        { freq: 659.25, duration: 0.5 }, // E5
-        { freq: 783.99, duration: 0.5 }, // G5
-        { freq: 659.25, duration: 0.5 }, // E5
-        { freq: 587.33, duration: 0.5 }, // D5
-        { freq: 523.25, duration: 0.5 }, // C5
-        { freq: 493.88, duration: 0.5 }, // B4
-        { freq: 523.25, duration: 0.5 }, // C5
-        { freq: 587.33, duration: 0.5 }, // D5
-        { freq: 659.25, duration: 0.5 }, // E5
-        { freq: 783.99, duration: 0.5 }, // G5
-        { freq: 880.00, duration: 0.5 }, // A5
-        { freq: 783.99, duration: 0.5 }, // G5
-        { freq: 659.25, duration: 0.5 }, // E5
-        { freq: 587.33, duration: 1.0 }, // D5 (hold)
-      ];
-      
-      let time = 0;
-      const volume = 0.15;
-      
-      // Generate the melody with gentle piano-like envelope
-      for (let i = 0; i < notes.length; i++) {
-        const note = notes[i];
-        const freq = note.freq;
-        const dur = note.duration * sampleRate;
-        const startSample = Math.floor(time * sampleRate);
-        const endSample = Math.min(startSample + Math.floor(dur), bufferLength);
-        
-        // Add decay envelope
-        for (let j = startSample; j < endSample; j++) {
-          const progress = (j - startSample) / dur;
-          const envelope = Math.sin(progress * Math.PI) * (1 - progress * 0.5);
-          const value = Math.sin(2 * Math.PI * freq * j / sampleRate) * envelope * volume;
-          
-          // Add gentle vibrato
-          const vibrato = 1 + 0.005 * Math.sin(2 * Math.PI * 5 * j / sampleRate);
-          const vibratoValue = Math.sin(2 * Math.PI * freq * vibrato * j / sampleRate) * envelope * volume * 0.7;
-          
-          leftChannel[j] += value + vibratoValue * 0.3;
-          rightChannel[j] += value + vibratoValue * 0.3;
-        }
-        time += note.duration;
+      // Check if page belongs to song1
+      if (config.song1 && config.song1.pages && config.song1.pages.includes(pageNum)) {
+        return config.song1.url;
       }
       
-      // Add some soft ambient pad
-      for (let i = 0; i < bufferLength; i++) {
-        const progress = i / bufferLength;
-        const ambient = Math.sin(2 * Math.PI * 110 * i / sampleRate) * 0.03 * (1 - progress);
-        leftChannel[i] += ambient;
-        rightChannel[i] += ambient;
+      // Check if page belongs to song2
+      if (config.song2 && config.song2.pages && config.song2.pages.includes(pageNum)) {
+        return config.song2.url;
       }
       
-      return true;
+      // Default to song1 if no match
+      return config.song1 ? config.song1.url : null;
+    }
+
+    function createAudio(url) {
+      if (!url) return null;
+      const audio = new Audio(url);
+      audio.loop = true;
+      audio.volume = 0.5;
+      audio.preload = 'auto';
+      return audio;
     }
 
     function startMusic() {
       if (musicStarted) return;
-      if (!audioContext) {
-        createMusic();
+      
+      const url = getSongForPage(currentPageNumber);
+      if (!url) {
+        console.warn('No song URL found for page', currentPageNumber);
+        return;
       }
       
-      if (audioContext.state === 'suspended') {
-        audioContext.resume();
+      audioElement = createAudio(url);
+      if (audioElement) {
+        audioElement.play().catch(e => {
+          console.log('Autoplay prevented, waiting for user interaction');
+        });
+        currentSong = url;
+        musicStarted = true;
+        updateMusicButton();
+      }
+    }
+
+    function switchSong(pageNum) {
+      currentPageNumber = pageNum;
+      const newUrl = getSongForPage(pageNum);
+      
+      // If same song or no URL, do nothing
+      if (newUrl === currentSong || !newUrl) return;
+      
+      // Stop current audio
+      if (audioElement) {
+        audioElement.pause();
+        audioElement = null;
       }
       
-      if (audioBuffer && !isPlaying) {
-        audioSource = audioContext.createBufferSource();
-        audioSource.buffer = audioBuffer;
-        audioSource.loop = true;
-        audioSource.connect(audioContext.destination);
-        audioSource.start(0);
-        isPlaying = true;
+      // Create and play new song
+      audioElement = createAudio(newUrl);
+      if (audioElement) {
+        audioElement.play().catch(e => {
+          console.log('Autoplay prevented, waiting for user interaction');
+        });
+        currentSong = newUrl;
         musicStarted = true;
         updateMusicButton();
       }
@@ -613,19 +621,23 @@
       isMuted = !isMuted;
       
       if (isMuted) {
-        if (audioSource) {
-          audioSource.disconnect();
-          audioSource = null;
+        if (audioElement) {
+          audioElement.pause();
         }
-        isPlaying = false;
       } else {
-        if (!isPlaying && audioBuffer) {
-          audioSource = audioContext.createBufferSource();
-          audioSource.buffer = audioBuffer;
-          audioSource.loop = true;
-          audioSource.connect(audioContext.destination);
-          audioSource.start(0);
-          isPlaying = true;
+        if (audioElement) {
+          audioElement.play().catch(e => console.log('Error resuming audio:', e));
+        } else {
+          // Recreate audio if needed
+          const url = getSongForPage(currentPageNumber);
+          if (url) {
+            audioElement = createAudio(url);
+            if (audioElement) {
+              audioElement.play().catch(e => console.log('Error playing audio:', e));
+              currentSong = url;
+              musicStarted = true;
+            }
+          }
         }
       }
       updateMusicButton();
@@ -633,6 +645,8 @@
 
     function updateMusicButton() {
       const btn = document.getElementById('musicControl');
+      if (!btn) return;
+      
       if (isMuted || !musicStarted) {
         btn.textContent = '🔇';
         btn.classList.add('muted');
@@ -642,43 +656,68 @@
       }
     }
 
-    // Click handler to start music
+    // Handle first click to start music
     function handleFirstClick() {
       if (!musicStarted) {
         startMusic();
       }
-      // Remove listener after first click
       document.removeEventListener('click', handleFirstClick);
       document.removeEventListener('touchstart', handleFirstClick);
     }
 
-    // Listen for clicks to start music
     document.addEventListener('click', handleFirstClick);
     document.addEventListener('touchstart', handleFirstClick);
 
     // Music control button
-    document.getElementById('musicControl').addEventListener('click', function(e) {
-      e.stopPropagation();
-      toggleMusic();
+    const musicBtn = document.getElementById('musicControl');
+    if (musicBtn) {
+      musicBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMusic();
+      });
+    }
+
+    // Expose functions globally
+    window.startBackgroundMusic = startMusic;
+    window.switchBackgroundMusic = switchSong;
+    window.toggleBackgroundMusic = toggleMusic;
+    window.musicStarted = () => musicStarted;
+
+    // Check for page changes
+    const originalShowPage = window.showPage;
+    window.showPage = function(number) {
+      if (originalShowPage) {
+        originalShowPage(number);
+      }
+      // Switch music if page changed
+      if (number !== currentPageNumber) {
+        switchSong(number);
+      }
+    };
+
+    // Also handle the "What?" button click
+    document.addEventListener('click', function(e) {
+      const target = e.target.closest('[onclick]');
+      if (target && target.getAttribute('onclick') && target.getAttribute('onclick').includes('showPage')) {
+        // The showPage function will handle the music switch
+        setTimeout(() => {
+          if (!musicStarted) {
+            startMusic();
+          }
+        }, 100);
+      }
     });
 
-    // Pre-create audio context on any interaction
-    document.addEventListener('pointerdown', function() {
-      if (!audioContext) {
-        createMusic();
-      }
-    }, { once: true });
-
-    // Expose start function for other interactions
-    window.startBackgroundMusic = startMusic;
   })();
 
   /* =========================================================
-     PAGE NAVIGATION
+     PAGE NAVIGATION (overridden by music system)
      ========================================================= */
   let currentPage = 1;
 
-  function showPage(number) {
+  // Override showPage to work with music system
+  const originalShowPage = window.showPage || function() {};
+  window.showPage = function(number) {
     document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
     const target = document.getElementById("page" + number);
     if (target) {
@@ -686,11 +725,44 @@
       currentPage = number;
       window.scrollTo(0, 0);
     }
-    // Start music on page navigation if not already started
-    if (typeof window.startBackgroundMusic === 'function') {
-      window.startBackgroundMusic();
+    
+    // Switch music for this page
+    if (typeof window.switchBackgroundMusic === 'function') {
+      window.switchBackgroundMusic(number);
     }
-  }
+    
+    // Start music if not started
+    if (typeof window.startBackgroundMusic === 'function') {
+      setTimeout(() => {
+        if (!window.musicStarted || !window.musicStarted()) {
+          window.startBackgroundMusic();
+        }
+      }, 100);
+    }
+  };
+
+  // Also update music when page is shown via other means
+  document.addEventListener('click', function(e) {
+    // Check if any button with showPage was clicked
+    const btn = e.target.closest('[onclick*="showPage"]');
+    if (btn) {
+      // The onclick will handle it, but we ensure music starts
+      setTimeout(() => {
+        if (typeof window.startBackgroundMusic === 'function') {
+          window.startBackgroundMusic();
+        }
+      }, 200);
+    }
+  });
+
+  // Override yesAnswer to ensure music switches
+  const originalYesAnswer = window.yesAnswer;
+  window.yesAnswer = function() {
+    if (originalYesAnswer) {
+      originalYesAnswer();
+    }
+    // Music will be switched by showPage(4) call
+  };
 
   /* =========================================================
      SCRATCH CARD
