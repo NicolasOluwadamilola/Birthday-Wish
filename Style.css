@@ -216,14 +216,7 @@ button:active {
   transform: scale(0.97);
 }
 
-/* restart button (last page) */
-#restartBtn {
-  margin-top: 32px;
-  padding: 10px 28px;
-  font-size: 0.95rem;
-  letter-spacing: 2px;
-  border-color: rgba(200, 215, 230, 0.15);
-}
+/* forgive page specific buttons - handled inline, but we keep base */
 
 /* ----- RESPONSIVE (touch) ----- */
 @media (max-width: 600px) {
@@ -249,5 +242,13 @@ button:active {
   }
   #startScreen span:first-child {
     font-size: 3.8rem;
+  }
+  .forgive-buttons {
+    gap: 14px;
+  }
+  .forgive-buttons button {
+    min-width: 100px;
+    padding: 12px 24px;
+    font-size: 1rem;
   }
 }
