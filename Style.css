@@ -1,119 +1,253 @@
+/* ============================================
+   style.css  –  refined aesthetics
+   ============================================ */
+
+/* ----- RESET & BASE ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-  color: #f0f0f0; /* Softer white */
-  text-align: center;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #2c3e50, #4a6274); /* A melancholic, muted blue-grey */
-  position: relative;
-}
-
-/* SPA Page Container */
-.page-container {
-  position: relative;
-  z-index: 1;
-  padding: 20px;
-  max-width: 700px; /* Better readability */
-  margin: 0 auto;
-}
-
-/* Name style - more intimate */
-.name {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3.8em;
-  text-shadow: 0 0 20px #a4b0be;
-  animation: glowPulse 3s infinite alternate;
-  color: #dfe6e9;
-}
-
-@keyframes glowPulse {
-  from { text-shadow: 0 0 10px #a4b0be, 0 0 20px #747d8c; }
-  to { text-shadow: 0 0 20px #dfe6e9, 0 0 40px #a4b0be; }
-}
-
-/* Glowing heading - more of a gentle shimmer */
-.glow {
-  color: #f1f2f6;
-  text-shadow: 0 0 5px #747d8c, 0 0 10px #a4b0be;
+  font-family: 'Poppins', sans-serif;
   font-weight: 300;
-  letter-spacing: 2px;
-}
-
-/* Handwriting effect */
-.handwriting {
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.1em;
-  line-height: 1.6;
+  color: #f0f0f0;
+  background: linear-gradient(145deg, #1e2b36 0%, #2c4050 100%);
+  transition: background 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
-  width: 100%;
-  max-width: 600px;
-  display: inline-block;
-  white-space: normal;
-  word-wrap: break-word;
-  animation: typing 4s steps(60, end) forwards, blink 0.8s infinite;
-  margin-top: 20px;
-  text-align: center;
-  color: #dfe6e9; /* Light grey for text */
-  background: rgba(0,0,0,0.2); /* A subtle background to make text pop */
-  padding: 15px 20px;
-  border-radius: 10px;
-  backdrop-filter: blur(2px);
+  padding: 20px;
+  position: relative;
 }
-@keyframes typing { from { width:0 } to { width:100% } }
-@keyframes blink { 50% { border-color: transparent } }
 
-/* Buttons - more subtle */
-button {
-  margin-top: 40px;
-  padding: 12px 28px;
-  font-size: 18px;
-  border-radius: 40px;
-  border: 1px solid #a4b0be;
-  background: transparent;
-  color: #dfe6e9;
+/* ----- START SCREEN (dreamy overlay) ----- */
+#startScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(16, 24, 32, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: #e6edf4;
   cursor: pointer;
-  transition: all 0.3s ease;
+  text-align: center;
+  padding: 30px;
+  transition: opacity 1s ease, visibility 1s ease;
   font-weight: 300;
   letter-spacing: 1px;
 }
 
-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: scale(1.02);
-  box-shadow: 0 0 20px rgba(164, 176, 190, 0.2);
+#startScreen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-/* Ribbons styled as tears */
-.ribbons {
+#startScreen span:first-child {
+  font-family: 'Great Vibes', cursive;
+  font-size: 4.8rem;
+  display: block;
+  margin-bottom: 12px;
+  animation: pulseHeart 2.6s infinite alternate;
+  text-shadow: 0 0 30px rgba(180, 200, 220, 0.3);
+}
+
+@keyframes pulseHeart {
+  0% { transform: scale(1); opacity: 0.7; text-shadow: 0 0 20px #a0b8ce; }
+  100% { transform: scale(1.06); opacity: 1; text-shadow: 0 0 50px #c0d4e6; }
+}
+
+/* ----- TEARS CONTAINER (falling) ----- */
+.tears-container {
   position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
 }
-.ribbon {
+
+.tear {
   position: absolute;
-  width: 2px; /* Thinner like a tear drop */
-  height: 30px;
-  opacity: 0.6;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Tear-drop shape */
+  width: 3px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0.35;
+  background: #b8c9dd;
+  box-shadow: 0 0 12px #8ba1b5;
   animation: fall linear infinite;
-  background: #a4b0be; /* Base color for tears */
-  box-shadow: 0 0 8px #747d8c;
 }
-/* Different shades of blue/grey for tears */
-.ribbon:nth-child(3n){background:#74b9ff; box-shadow: 0 0 10px #0984e3;}
-.ribbon:nth-child(3n+1){background:#dfe6e9; box-shadow: 0 0 10px #b2bec3;}
-.ribbon:nth-child(3n+2){background:#81ecec; box-shadow: 0 0 10px #00cec9;}
+
+/* subtle variety in tear colours */
+.tear:nth-child(5n)   { background: #b8d4e8; box-shadow: 0 0 14px #6d9bbf; }
+.tear:nth-child(5n+1) { background: #d0dce8; box-shadow: 0 0 14px #9eb2c9; }
+.tear:nth-child(5n+2) { background: #aac2d8; box-shadow: 0 0 14px #5f7f9e; }
+.tear:nth-child(5n+3) { background: #c8d8e6; box-shadow: 0 0 14px #8aa3b9; }
+.tear:nth-child(5n+4) { background: #b0c8dd; box-shadow: 0 0 14px #7897b3; }
 
 @keyframes fall {
-  0% { transform: translateY(-50px) translateX(0) rotate(0deg) scale(0.8); opacity: 0.2; }
-  50% { transform: translateY(50vh) translateX(20px) rotate(10deg) scale(1); opacity: 0.8; }
-  100% { transform: translateY(110vh) translateX(-10px) rotate(-5deg) scale(0.6); opacity: 0.1; }
+  0%   { transform: translateY(-10vh) translateX(0) rotate(0deg) scale(0.6); opacity: 0.05; }
+  15%  { opacity: 0.5; }
+  85%  { opacity: 0.5; }
+  100% { transform: translateY(110vh) translateX(18px) rotate(5deg) scale(0.9); opacity: 0; }
+}
+
+/* ----- MAIN CARD (glass-morphism) ----- */
+.page-container {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 30px 50px;
+  background: rgba(20, 30, 40, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+/* ----- TYPOGRAPHY : soft & elegant ----- */
+.name {
+  font-family: 'Great Vibes', cursive;
+  font-size: 3.6rem;
+  font-weight: 400;
+  color: #f2f7fc;
+  text-shadow: 0 0 30px rgba(160, 185, 210, 0.4), 0 4px 20px rgba(0,0,0,0.3);
+  margin-bottom: 0.1rem;
+  letter-spacing: 1.5px;
+  animation: glowPulse 4s infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 18px #9bb0c9, 0 0 30px #6f8aa5; }
+  100% { text-shadow: 0 0 30px #d0dce8, 0 0 60px #a0b8ce; }
+}
+
+.glow {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 200;
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  color: #e6eef6;
+  text-shadow: 0 0 12px rgba(160, 180, 200, 0.3), 0 2px 12px rgba(0,0,0,0.2);
+  margin-top: -8px;
+  margin-bottom: 20px;
+  opacity: 0.85;
+}
+
+/* ----- HANDWRITING MESSAGE (elegant reveal) ----- */
+.handwriting {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #e4ecf5;
+  background: rgba(10, 18, 26, 0.25);
+  padding: 22px 28px;
+  border-radius: 28px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  max-width: 600px;
+  margin: 16px auto 0;
+  text-align: center;
+  white-space: pre-line;
+  word-wrap: break-word;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.15);
+  transition: all 0.3s;
+  /* typing effect via JS (width animation) */
+  overflow: hidden;
+  width: 0;
+  animation: typing 3.8s steps(50, end) forwards, blink 0.9s step-end 4;
+  animation-delay: 0.2s;
+  border-right: 2px solid rgba(200, 215, 230, 0.3);
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { border-color: rgba(200, 215, 230, 0.3); }
+  50% { border-color: transparent; }
+}
+
+/* ----- BUTTONS (minimal, poetic) ----- */
+button {
+  margin-top: 36px;
+  padding: 12px 34px;
+  font-size: 1.05rem;
+  font-weight: 300;
+  letter-spacing: 2.5px;
+  border-radius: 60px;
+  border: 1px solid rgba(200, 215, 230, 0.25);
+  background: rgba(255, 255, 255, 0.03);
+  color: #e0eaf3;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.02);
+  border-color: rgba(200, 215, 230, 0.5);
+  box-shadow: 0 0 30px rgba(160, 185, 210, 0.15);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* restart button (last page) */
+#restartBtn {
+  margin-top: 32px;
+  padding: 10px 28px;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  border-color: rgba(200, 215, 230, 0.15);
+}
+
+/* ----- RESPONSIVE (touch) ----- */
+@media (max-width: 600px) {
+  .page-container {
+    padding: 24px 18px 38px;
+    border-radius: 36px;
+  }
+  .name {
+    font-size: 2.8rem;
+  }
+  .glow {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+  }
+  .handwriting {
+    font-size: 1rem;
+    padding: 18px 16px;
+    max-width: 100%;
+  }
+  button {
+    padding: 10px 24px;
+    font-size: 0.95rem;
+  }
+  #startScreen span:first-child {
+    font-size: 3.8rem;
+  }
 }
