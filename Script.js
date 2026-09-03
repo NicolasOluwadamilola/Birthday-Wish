@@ -27,33 +27,33 @@ for (let i = 0; i < 12; i++) {
 const pages = [
   {
     id: 0,
-    name: 'My Dearest 💔',
-    heading: 'I\'m So Sorry',
-    message: `I've been doing a lot of thinking, and I realize I made a mistake.\nI let my pride get in the way, and I hurt you.\nI know saying "sorry" might not fix everything, but I need you to know that my regret is real.\nPlease know that you mean more to me than my ego ever did.\nI miss you. I miss us.`,
+    name: 'Eniola ❤️',
+    heading: 'The Silence',
+    message: `I know I’ve been silent for too long, and I’m sorry. I was hurt and angry, so I chose to distance myself.\n But two weeks of silence was not the right way to handle it.`,
     song: 'Chicago .mp3',
     bg: 'linear-gradient(145deg, #1e2b36, #3a4f60)'
   },
   {
     id: 1,
-    name: 'To You 🌹',
-    heading: 'I Was Wrong',
-    message: `I've had time to reflect, and I see things differently now.\nI was selfish, and I didn't appreciate you the way I should have.\nYou deserved better from me. I'm not making excuses, just trying to be honest.\nI hope you can find it in your heart to forgive me.`,
+    name: 'To You, Feranmi 🌹',
+    heading: 'The truth',
+    message: `What happened really got to me, and I needed time to process it. But being hurt doesn’t excuse the way I handled things. \n I should have talked to you instead of shutting you out.`,
     song: 'Chicago .mp3',
     bg: 'linear-gradient(145deg, #2d4050, #4a6478)'
   },
   {
     id: 2,
-    name: 'For You 💖',
-    heading: 'I Miss Your Smile',
-    message: `The silence feels so loud without you.\nI miss your laugh, your voice, the way you make everything seem brighter.\nThe thought of losing you is the worst pain I've known.\nI'm here, ready to listen, ready to change, ready to do better.\nI just need a chance.`,
+    name: 'For You, Folashade 💖',
+    heading: 'My apology',
+    message: `I’m genuinely sorry. Not because my feelings weren’t valid, but because I could have expressed them without hurting you in return.\n You deserved better from me.`,
     song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #3a5568, #5a7a8e)'
   },
   {
     id: 3,
-    name: 'Always & Forever ❤️',
-    heading: 'Can We Try Again?',
-    message: `I know things won't be the same overnight, and I'm not asking for that.\nAll I'm asking for is a chance to earn back your trust.\nI want to show you that you are my priority.\nI want to be the person you deserve.\nI'm sorry for everything, and I promise to do better.\nWith all my love.`,
+    name: 'Always & Forever, Itunu ❤️',
+    heading: 'I miss you?',
+    message: `I miss us.\n I miss how things were before all of this, and honestly, I just want us to find our way back there. I’m sorry, and I hope we can be okay again.`,
     song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #4a6a7e, #6e8fa3)'
   },
@@ -61,8 +61,8 @@ const pages = [
   {
     id: 4,
     name: 'One Last Question 💫',
-    heading: 'Do You Forgive Me?',
-    message: `I know I don't deserve it, but I'm asking with all my heart.\nCan you find it in you to forgive me?`,
+    heading: 'Can we talk?',
+    message: `Itunu\n My sweetheart, The only girl i love and i want\n can we talk?????`,
     song: 'Sade.mp3',
     bg: 'linear-gradient(145deg, #2a4050, #4a6a7e)',
     isForgivePage: true
@@ -72,7 +72,7 @@ const pages = [
     id: 5,
     name: 'You Said Yes! 🎉',
     heading: 'Thank You',
-    message: `You have no idea how much this means to me.\nI promise I'll spend every day making it up to you.\nI love you. ❤️`,
+    message: `You have no idea how much this means to me.\nI promise I'll try my possible best to make it up to you.\nI love you. ❤️`,
     song: 'Julius .mp3',
     bg: 'linear-gradient(145deg, #2a5a4a, #4a8a7a)',
     isCelebratory: true
