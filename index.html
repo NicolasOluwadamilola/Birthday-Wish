@@ -436,22 +436,28 @@
      ============================================================ -->
 <script>
   // ============================================================
-  //  SONG LINKS - Replace these with your own audio file URLs
+  //  SONG CONFIGURATION
+  //  Place your audio files in the same folder as this HTML file
+  //  or in a subfolder like 'audio/'
   // ============================================================
   
   const SONG_CONFIG = {
     // First song - plays on pages 1, 2, and 3
+    // Replace 'song1.mp3' with your actual filename
     song1: {
+      // If your song is in the same folder:
       url: "raindance.mp3",
-      // Alternative: Use a direct audio file link
-      // url: "https://example.com/your-romantic-song.mp3",
+      // If your song is in a subfolder called 'audio':
+      // url: "audio/song1.mp3",
       pages: [1, 2, 3]
     },
     // Second song - plays on pages 4 and beyond
+    // Replace 'song2.mp3' with your actual filename
     song2: {
-      url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-      // Alternative: Use a direct audio file link
-      // url: "https://example.com/your-celebratory-song.mp3",
+      // If your song is in the same folder:
+      url: "song2.mp3",
+      // If your song is in a subfolder called 'audio':
+      // url: "audio/song2.mp3",
       pages: [4]
     }
   };
@@ -573,6 +579,7 @@
       const url = getSongForPage(currentPageNumber);
       if (!url) {
         console.warn('No song URL found for page', currentPageNumber);
+        console.warn('Make sure your audio files are in the same folder as this HTML file');
         return;
       }
       
