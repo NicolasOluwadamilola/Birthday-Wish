@@ -19,7 +19,6 @@ function createTear() {
 
 // spawn tears at intervals
 setInterval(createTear, 280);
-// also create a few immediately
 for (let i = 0; i < 12; i++) {
   setTimeout(createTear, i * 120);
 }
@@ -57,6 +56,36 @@ const pages = [
     message: `I know things won't be the same overnight, and I'm not asking for that.\nAll I'm asking for is a chance to earn back your trust.\nI want to show you that you are my priority.\nI want to be the person you deserve.\nI'm sorry for everything, and I promise to do better.\nWith all my love.`,
     song: 'hopeful-piano.mp3',
     bg: 'linear-gradient(145deg, #4a6a7e, #6e8fa3)'
+  },
+  // ----- FORGIVE PAGE (id: 4) -----
+  {
+    id: 4,
+    name: 'One Last Question 💫',
+    heading: 'Do You Forgive Me?',
+    message: `I know I don't deserve it, but I'm asking with all my heart.\nCan you find it in you to forgive me?`,
+    song: 'hopeful-piano.mp3',
+    bg: 'linear-gradient(145deg, #2a4050, #4a6a7e)',
+    isForgivePage: true
+  },
+  // ----- CELEBRATORY PAGE (id: 5) -----
+  {
+    id: 5,
+    name: 'You Said Yes! 🎉',
+    heading: 'Thank You',
+    message: `You have no idea how much this means to me.\nI promise I'll spend every day making it up to you.\nI love you. ❤️`,
+    song: 'celebratory.mp3',
+    bg: 'linear-gradient(145deg, #2a5a4a, #4a8a7a)',
+    isCelebratory: true
+  },
+  // ----- GOODBYE PAGE (id: 6) -----
+  {
+    id: 6,
+    name: 'I Understand 💔',
+    heading: 'Goodbye',
+    message: `I know I hurt you deeply, and I respect your decision.\nI'll always cherish the memories we shared.\nMaybe in another life.\nTake care of yourself. 🌹`,
+    song: 'goodbye.mp3',
+    bg: 'linear-gradient(145deg, #2a2a3a, #3a3a4a)',
+    isGoodbye: true
   }
 ];
 
@@ -66,16 +95,33 @@ const music = document.getElementById('bgMusic');
 const startScreen = document.getElementById('startScreen');
 
 let currentPage = 0;
+let noClickCount = 0; // track "No" clicks for forgiveness page
 
 // ----- LOAD PAGE -----
 function loadPage(index) {
   const page = pages[index];
   if (!page) return;
 
-  // build HTML
+  // ---- SPECIAL PAGES ----
+  if (page.isForgivePage) {
+    renderForgivePage(page);
+    return;
+  }
+
+  if (page.isCelebratory) {
+    renderCelebratoryPage(page);
+    return;
+  }
+
+  if (page.isGoodbye) {
+    renderGoodbyePage(page);
+    return;
+  }
+
+  // ---- NORMAL PAGE ----
   const isLast = (index === pages.length - 1);
   const btnHtml = isLast
-    ? `<button id="restartBtn" style="margin-top: 30px; letter-spacing: 1.5px;">Start Over 💫</button>`
+    ? `<button id="nextBtn" style="margin-top: 30px; letter-spacing: 1.5px;">Continue 💫</button>`
     : `<button id="nextBtn">Read On ❤️</button>`;
 
   container.innerHTML = `
@@ -85,7 +131,7 @@ function loadPage(index) {
     ${btnHtml}
   `;
 
-  // update background with smooth transition
+  // update background
   document.body.style.background = page.bg;
 
   // music
@@ -94,45 +140,146 @@ function loadPage(index) {
     music.play().catch(() => {});
   }
 
-  // ----- event listeners for buttons -----
-  if (!isLast) {
-    const nextBtn = document.getElementById('nextBtn');
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        currentPage++;
-        loadPage(currentPage);
-      });
-    }
-  } else {
-    const restartBtn = document.getElementById('restartBtn');
-    if (restartBtn) {
-      restartBtn.addEventListener('click', () => {
-        currentPage = 0;
-        loadPage(currentPage);
-      });
-    }
+  // ---- event listeners ----
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      currentPage++;
+      loadPage(currentPage);
+    });
   }
 
-  // re-trigger typing animation: remove and re-add class
+  // re-trigger typing animation
   const msgEl = container.querySelector('.handwriting');
   if (msgEl) {
     msgEl.style.animation = 'none';
-    msgEl.offsetHeight; // reflow
+    msgEl.offsetHeight;
     msgEl.style.animation = 'typing 3.8s steps(50, end) forwards, blink 0.9s step-end 4';
   }
+}
+
+// ----- RENDER FORGIVE PAGE -----
+function renderForgivePage(page) {
+  container.innerHTML = `
+    <h1 class="name">${page.name}</h1>
+    <h2 class="glow">${page.heading}</h2>
+    <p class="handwriting" style="animation: typing 2.8s steps(40, end) forwards, blink 0.9s step-end 4;">${page.message}</p>
+    <div class="forgive-buttons">
+      <button class="btn-yes" id="forgiveYes">Yes ❤️</button>
+      <button class="btn-no" id="forgiveNo">No 💔</button>
+    </div>
+    <div id="sureMessage" style="margin-top: 16px; min-height: 40px;"></div>
+  `;
+
+  document.body.style.background = page.bg;
+  if (page.song) {
+    music.src = page.song;
+    music.play().catch(() => {});
+  }
+
+  // re-trigger typing
+  const msgEl = container.querySelector('.handwriting');
+  if (msgEl) {
+    msgEl.style.animation = 'none';
+    msgEl.offsetHeight;
+    msgEl.style.animation = 'typing 2.8s steps(40, end) forwards, blink 0.9s step-end 4';
+  }
+
+  // ---- YES button ----
+  document.getElementById('forgiveYes').addEventListener('click', () => {
+    // go to celebratory page (index 5)
+    currentPage = 5;
+    loadPage(currentPage);
+  });
+
+  // ---- NO button ----
+  const noBtn = document.getElementById('forgiveNo');
+  const sureMsg = document.getElementById('sureMessage');
+
+  noBtn.addEventListener('click', () => {
+    noClickCount++;
+
+    if (noClickCount === 1) {
+      sureMsg.innerHTML = `<div class="sure-message">Are you sure? 😔</div>`;
+      noBtn.textContent = 'Yes, I\'m Sure';
+      noBtn.style.borderColor = 'rgba(210, 150, 150, 0.7)';
+    } else if (noClickCount === 2) {
+      sureMsg.innerHTML = `<div class="sure-message">Please... think again. 💔</div>`;
+      noBtn.textContent = 'I\'m Sure';
+    } else if (noClickCount >= 3) {
+      // redirect to goodbye page (index 6)
+      currentPage = 6;
+      loadPage(currentPage);
+    }
+  });
+}
+
+// ----- RENDER CELEBRATORY PAGE -----
+function renderCelebratoryPage(page) {
+  container.innerHTML = `
+    <span class="celebratory-emoji">🎉❤️🎉</span>
+    <h1 class="name" style="font-size: 3rem;">${page.name}</h1>
+    <h2 class="glow" style="font-size: 1.4rem;">${page.heading}</h2>
+    <p class="handwriting" style="animation: typing 2.8s steps(40, end) forwards, blink 0.9s step-end 4;">${page.message}</p>
+    <button id="tellToMyFace" style="margin-top: 30px; padding: 14px 40px; font-size: 1.1rem;">
+      Tell Me To My Face 💬
+    </button>
+  `;
+
+  document.body.style.background = page.bg;
+  if (page.song) {
+    music.src = page.song;
+    music.play().catch(() => {});
+  }
+
+  // re-trigger typing
+  const msgEl = container.querySelector('.handwriting');
+  if (msgEl) {
+    msgEl.style.animation = 'none';
+    msgEl.offsetHeight;
+    msgEl.style.animation = 'typing 2.8s steps(40, end) forwards, blink 0.9s step-end 4';
+  }
+
+  // ---- WhatsApp redirect ----
+  document.getElementById('tellToMyFace').addEventListener('click', () => {
+    // Replace with your WhatsApp number (without +)
+    const phoneNumber = '2348123456789'; // <-- CHANGE THIS
+    window.open(`https://wa.me/${phoneNumber}`, '_blank');
+  });
+}
+
+// ----- RENDER GOODBYE PAGE -----
+function renderGoodbyePage(page) {
+  container.innerHTML = `
+    <h1 class="name" style="font-size: 2.8rem;">${page.name}</h1>
+    <h2 class="glow" style="font-size: 1.2rem; opacity: 0.6;">${page.heading}</h2>
+    <div class="goodbye-message">${page.message}</div>
+    <button id="restartFromGoodbye" style="margin-top: 30px; letter-spacing: 1.5px;">
+      Start Over 💫
+    </button>
+  `;
+
+  document.body.style.background = page.bg;
+  if (page.song) {
+    music.src = page.song;
+    music.play().catch(() => {});
+  }
+
+  document.getElementById('restartFromGoodbye').addEventListener('click', () => {
+    currentPage = 0;
+    noClickCount = 0;
+    loadPage(currentPage);
+  });
 }
 
 // ----- START SCREEN -----
 startScreen.addEventListener('click', () => {
   startScreen.classList.add('hidden');
   music.play().catch(() => {});
-  // start tears if not already
 });
 
-// initial load
+// ----- INITIAL LOAD -----
 loadPage(currentPage);
 
-// ----- handle window resize for tears (optional) -----
-window.addEventListener('resize', () => {
-  // no need to reposition, tears flow freely
-});
+// ----- resize handler -----
+window.addEventListener('resize', () => {});
